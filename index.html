@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RDF – Relatório Diário de Fiscalização</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <header class="app-header">
+    <div>
+      <img src="assets/Logo Branco.svg"></img>
+      <h1 class="app-header-title">Relatório Diário de Fiscalização</h1>
+      <span class="badge">RDF</span>
+    </div>
+
+    <div>
+      <button class="btn-pdf" id="btn-exportar-pdf" onclick="gerarPDF()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M2 11v1.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V11M7 1v8M4 6l3 3 3-3" stroke="#1A1917"
+            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        Exportar PDF
+      </button>
+      <button class="btn-pdf" id="btn-exportar">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M2 11v1.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V11M7 1v8M4 6l3 3 3-3" stroke="#1A1917"
+            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        Exportar CSV
+      </button>
+    </div>
+  </header>
+
+  <section class="container">
+
+    <!-- 1. Identificação -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <h2>Identificação da Atividade</h2>
+      </div>
+      <div class="section-body">
+        <div class="grid-2">
+          <div class="field col-span-2"><label>Segmento</label><input type="text" id="segmento"
+              placeholder="Ex: Automação"></div>
+          <div class="field col-span-2"><label>Projeto</label><input type="text" id="projeto"
+              placeholder="Ex: Troca de Bateria ISA"></div>
+          <div class="field"><label>RDO</label><select id="rdo">
+              <option value="">Selecione...</option>
+              <option>Sim</option>
+              <option>Não</option>
+            </select></div>
+          <div class="field"><label>Responsável Técnico</label><input type="text" id="responsavel"
+              placeholder="Engenheiro / Técnico"></div>
+          <div class="field"><label>Empresa Executora</label><input type="text" id="empresa"
+              placeholder="Razão social da empresa"></div>
+          <div class="field"><label>Data do Relatório</label><input type="date" id="data"></div>
+          <div class="field"><label>Período</label><select id="periodo">
+              <option value="">Selecione...</option>
+              <option>Diurno</option>
+              <option>Noturno</option>
+            </select></div>
+
+          <div class="time-row">
+            <div class="field"><label>Início</label><input type="time" id="ai-inicio"></div>
+            <div class="field"><label>Término</label><input type="time" id="ai-termino"></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Autorização -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <h2>Autorização</h2>
+      </div>
+      <div class="section-body">
+        <table class="mao-obra-table">
+          <tbody id="autorizacao-body"></tbody>
+        </table>
+        <button class="btn-add" onclick="addAutorizacao()">
+          <svg width="14" height="14" viewBox="0 0 14 14">
+            <path d="M7 2v10M2 7h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+          </svg>
+          Adicionar autorização
+        </button>
+      </div>
+    </div>
+
+    <!-- 3. Segurança -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <h2>Segurança do Trabalho</h2>
+      </div>
+      <div class="section-body">
+        <div class="grid-2">
+          <div class="field"><label>DDS Realizado?</label><select id="dds-realizado">
+              <option value="">Selecione...</option>
+              <option>Sim</option>
+              <option>Não</option>
+            </select></div>
+          <div class="field"><label>Possui ARL?</label><select id="arl">
+              <option value="">Selecione...</option>
+              <option>Sim</option>
+              <option>Não</option>
+            </select></div>
+          <div class="field"><label>Teve Inspeção?</label><select id="inspecao">
+              <option value="">Selecione...</option>
+              <option>Sim</option>
+              <option>Não</option>
+            </select></div>
+          <div class="field col-span-2"><label>ID</label><input type="text" id="seg-id"></div>
+          <div class="field col-span-2"><label>PA</label><input type="text" id="seg-pa"></div>
+          <div class="field col-span-2"><label>Tema do DDS</label><input type="text" id="dds-tema"
+              placeholder="Assunto abordado no DDS"></div>
+          <div class="field col-span-2"><label>Hospital mais próximo (PAE)</label><input type="text" id="hospital"
+              placeholder="Pronto Atendimento 24 horas - Jundiapeba"></div>
+          <div class="field col-span-2"><label>Endereço do Hospital</label><input type="text" id="hospital-end"
+              placeholder="R. DR. Francisco Soares Marialva, 1701"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Atividades -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <h2>Atividades Executadas</h2>
+      </div>
+      <div class="section-body">
+        <table class="mao-obra-table">
+          <tbody id="atividade-body"></tbody>
+        </table>
+        <button class="btn-add" onclick="addAtiv()">
+          <svg width="14" height="14" viewBox="0 0 14 14">
+            <path d="M7 2v10M2 7h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+          </svg>
+          Adicionar atividade
+        </button>
+        <div class="grid-2" style="margin-top:14px">
+          <div class="field"><label>POCC</label><input type="text" id="pocc"></div>
+          <div class="field"><label>POCS</label><input type="text" id="pocs"></div>
+          <div class="field"><label>PT</label><input type="text" id="pt"></div>
+          <div class="field"><label>Spool Aço</label><select id="spool">
+              <option value="">Selecione...</option>
+              <option>Sim</option>
+              <option>Não</option>
+            </select></div>
+          <div class="field"><label>Solda em Aço</label><select id="solda">
+              <option value="">Selecione...</option>
+              <option>Sim</option>
+              <option>Não</option>
+            </select></div>
+          <div class="field"><label>Teste</label><select id="teste">
+              <option value="">Selecione...</option>
+              <option>Sim</option>
+              <option>Não</option>
+            </select></div>
+          <div class="field"><label>Comissionamento</label><select id="comissionamento">
+              <option value="">Selecione...</option>
+              <option>Sim</option>
+              <option>Não</option>
+            </select></div>
+          <div class="field"><label>Assentamento</label><select id="assentamento">
+              <option value="">Selecione...</option>
+              <option>Sim</option>
+              <option>Não</option>
+            </select></div>
+          <div class="field"><label>Recomposição</label><select id="recomposicao">
+              <option value="">Selecione...</option>
+              <option>Definitivo</option>
+              <option>Provisório</option>
+            </select></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Stop Work -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num">5</div>
+        <h2>Stop Work</h2>
+      </div>
+      <div class="section-body">
+        <div class="field">
+          <label>Houve Stop Work?</label>
+          <select id="stop-work-select" onchange="toggleStopWork(this.value)">
+            <option value="">Selecione...</option>
+            <option>Sim</option>
+            <option>Não</option>
+          </select>
+        </div>
+        <div id="stop-work-extra" style="display:none;margin-top:10px">
+          <div class="time-row">
+            <div class="field"><label>Início</label><input type="time" id="sw-inicio"></div>
+            <div class="field"><label>Término</label><input type="time" id="sw-termino"></div>
+          </div>
+          <div class="field" style="margin-top:10px">
+            <label>Motivo da Paralização</label>
+            <textarea id="sw-motivo" rows="3"
+              placeholder="Descreva o motivo, providências tomadas, responsáveis..."></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. Fotos -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-num">6</div>
+        <h2>Registro Fotográfico</h2>
+      </div>
+      <div class="section-body">
+        <input type="file" id="file-input" accept="image/*" multiple>
+        <div class="drop-area" id="drop-area">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="3" y="5" width="26" height="20" rx="3" stroke="#888" stroke-width="1.5" />
+            <circle cx="11" cy="13" r="2.5" stroke="#888" stroke-width="1.3" />
+            <path d="M3 24l7-7 4 4 5-6 7 9" stroke="#888" stroke-width="1.3" stroke-linejoin="round" />
+            <path d="M22 5v-3M22 5l-2-2M22 5l2-2" stroke="#888" stroke-width="1.3" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+          <p><strong>Clique para selecionar</strong> ou arraste as fotos aqui</p>
+          <p>JPG, PNG — múltiplos arquivos aceitos</p>
+        </div>
+        <div class="photo-grid" id="photo-grid"></div>
+      </div>
+    </div>
+
+  </section>
+  <footer class="app-footer">RDF — Relatório Diário de Fiscalização · © 2026 Satel Brasil</footer>
+  <script src="main.js"></script>
+
+</body>
+
+</html>
