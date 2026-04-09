@@ -49,8 +49,18 @@
       </div>
       <div class="section-body">
         <div class="grid-2">
-          <div class="field col-span-2"><label>Segmento</label><input type="text" id="segmento"
-              placeholder="Ex: Automação"></div>
+
+          <div class="field col-span-2"><label>Segmento</label><select id="segmento">
+              <option value="">Selecione...</option>
+              <option>Manutenção</option>
+              <option>Operações de Rede</option>
+              <option>Assistência Técnica</option>
+              <option>Automação</option>
+              <option>Catódica</option>
+              <option>Manutenção Civil</option>
+            </select>
+          </div>
+
           <div class="field col-span-2"><label>Projeto</label><input type="text" id="projeto"
               placeholder="Ex: Troca de Bateria ISA"></div>
           <div class="field"><label>RDO</label><select id="rdo">
@@ -240,7 +250,8 @@
 
   </section>
   <footer class="app-footer">RDF — Relatório Diário de Fiscalização · © 2026 Satel Brasil</footer>
-  <script src="main.js"></script>
+  <script src="./scripts/main.js"></script>
+  <script src="./scripts/gerarPDF.js"></script>
 
 </body>
 
