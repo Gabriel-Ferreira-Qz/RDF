@@ -75,21 +75,34 @@ async function gerarPDF() {
             const body = g(tbodyId); if (!body) return [];
             const rows = [...body.querySelectorAll('tr')];
             const groups = [];
-            for (let i = 0; i < rows.length; i += 3) {
-                const els = rows.slice(i, i + 3).flatMap(r => [...r.querySelectorAll('input,textarea')]);
-                groups.push(els.map(e => e.value.trim()));
+
+            let i = 0;
+            while (i < rows.length) {
+                if (rows[i].dataset.groupStart === 'true') {
+                    const size = parseInt(rows[i].dataset.groupSize) || 1;
+                    const slice = rows.slice(i, i + size);
+                    const els = slice.flatMap(r => [...r.querySelectorAll('input, textarea')]);
+                    groups.push(els.map(e => e.value.trim()));
+                    i += size;
+                } else {
+                    i++;
+                }
             }
             return groups;
         }
 
+        function safe(v) {
+            return String(v ?? '').trim() || 'N/A';
+        }
+
         // ── Seção 1
         secHeader(1, 'Identificação da Atividade');
-        fld('Segmento', val('segmento'));
-        fld('Projeto', val('projeto'));
-        fld2('RDO', val('rdo'), 'Responsável Técnico', val('responsavel'));
-        fld2('Empresa Executora', val('empresa'), 'Data do Relatório', val('data'));
-        fld('Período', val('periodo'));
-        fld2('Início', val('ai-inicio'), 'Término', val('ai-termino'));
+        fld('Segmento', safe(val('segmento')));
+        fld('Projeto', safe(val('projeto')));
+        fld2('RDO', safe(val('rdo')), 'Responsável Técnico', safe(val('responsavel')));
+        fld2('Empresa Executora', safe(val('empresa')), 'Data do Relatório', safe(val('data')));
+        fld('Período', safe(val('periodo')));
+        fld2('Início', safe(val('ai-inicio')), 'Término', safe(val('ai-termino')));
         y += 4;
 
         // ── Seção 2
@@ -104,19 +117,21 @@ async function gerarPDF() {
                 doc.setFont('helvetica', 'bold'); doc.setFontSize(7.5); doc.setTextColor(...CA);
                 doc.text(`Autorização ${i + 1}`, ML, y + 4); y += 7;
                 fld('Vigência da Autorização', gr[0]);
-                fldM('Observação', gr[2]);
+                fldM('Observação', gr[1]);
                 y += 2;
             });
         }
         y += 4;
 
+        console.log(auths)
+
         // ── Seção 3
         secHeader(3, 'Segurança do Trabalho');
-        fld2('DDS Realizado?', val('dds-realizado'), 'Possui ARL?', val('arl'));
-        fld2('Teve Inspeção?', val('inspecao'), 'ID', val('seg-id'));
-        fld2('PA', val('seg-pa'), 'Tema do DDS', val('dds-tema'));
-        fld('Hospital mais próximo (PAE)', val('hospital'));
-        fld('Endereço do Hospital', val('hospital-end'));
+        fld2('DDS Realizado?', safe(val('dds-realizado')), 'Possui ARL?', safe(val('arl')));
+        fld2('Teve Inspeção?', safe(val('inspecao')), 'ID', safe(val('seg-id')));
+        fld2('PA', safe(val('seg-pa')), 'Tema do DDS', safe(val('dds-tema')));
+        fld('Hospital mais próximo (PAE)', safe(val('hospital')));
+        fld('Endereço do Hospital', safe(val('hospital-end')));
         y += 4;
 
         // ── Seção 4
@@ -136,17 +151,17 @@ async function gerarPDF() {
                 y += 2;
             });
         }
-        fld2('POCC', val('pocc'), 'POCS', val('pocs'));
-        fld2('PT', val('pt'), 'Spool Aço', val('spool'));
-        fld2('Solda em Aço', val('solda'), 'Teste', val('teste'));
-        fld2('Comissionamento', val('comissionamento'), 'Assentamento', val('assentamento'));
-        fld('Recomposição', val('recomposicao'));
+        fld2('POCC', safe(val('pocc')), 'POCS', safe(val('pocs')));
+        fld2('PT', safe(val('pt')), 'Spool Aço', safe(val('spool')));
+        fld2('Solda em Aço', safe(val('solda')), 'Teste', safe(val('teste')));
+        fld2('Comissionamento', safe(val('comissionamento')), 'Assentamento', safe(val('assentamento')));
+        fld('Recomposição', safe(val('recomposicao')));
         y += 4;
 
         // ── Seção 5
         secHeader(5, 'Stop Work');
         const sw = val('stop-work-select');
-        fld('Houve Stop Work?', sw);
+        fld('Houve Stop Work?', safe(sw));
         if (sw === 'Sim') {
             fld2('Início', val('sw-inicio'), 'Término', val('sw-termino'));
             fldM('Motivo da Paralização', val('sw-motivo'));

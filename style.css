@@ -235,8 +235,7 @@ textarea {
 }
 
 .mao-obra-table input {
-    background: transparent;
-    border: 1px solid transparent;
+    border: 1px solid var(--c-border);
     border-radius: 3px;
     padding: 5px 6px
 }

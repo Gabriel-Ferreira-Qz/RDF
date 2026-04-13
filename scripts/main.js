@@ -32,6 +32,10 @@ function addGroup(tbodyId, labels) {
             : `<textarea placeholder="${lbl.ph || ''}" style="width:100%"></textarea>`;
         return makeRow([`<label>${lbl.label}</label>${inp}`], null);
     });
+
+    rows[0].dataset.groupStart = 'true';
+    rows[0].dataset.groupSize = rows.length;
+
     const btn = document.createElement('button');
     btn.className = 'row-del'; btn.innerHTML = '×'; btn.title = 'Remover';
     btn.onclick = () => rows.forEach(r => r.remove());
