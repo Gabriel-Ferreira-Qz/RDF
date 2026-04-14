@@ -29,7 +29,7 @@
         </svg>
         Exportar PDF
       </button>
-      <button class="btn-pdf" id="btn-exportar">
+      <button class="btn-pdf" id="btn-exportar" onclick="gerarCSV()">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
           <path d="M2 11v1.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V11M7 1v8M4 6l3 3 3-3" stroke="#1A1917"
             stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -52,12 +52,10 @@
 
           <div class="field col-span-2"><label>Segmento</label><select id="segmento">
               <option value="">Selecione...</option>
-              <option>Manutenção</option>
-              <option>Operações de Rede</option>
-              <option>Assistência Técnica</option>
-              <option>Automação</option>
-              <option>Catódica</option>
-              <option>Manutenção Civil</option>
+              <option value="01">Manutenção e Operações de Rede</option>
+              <option value="02">Assistência Técnica</option>
+              <option value="03">Automação e Catódica</option>
+              <option value="04">Manutenção Civil</option>
             </select>
           </div>
 
@@ -68,8 +66,16 @@
               <option>Sim</option>
               <option>Não</option>
             </select></div>
-          <div class="field"><label>Responsável Técnico</label><input type="text" id="responsavel"
-              placeholder="Engenheiro / Técnico"></div>
+
+          <div class="field"><label>Responsável Técnico</label><select id="responsavel">
+              <option value="">Selecione...</option>
+              <option value="01">Ricardo Alves</option>
+              <option value="02">Luiz Ricardo</option>
+              <option value="03">Felipe Silva</option>
+              <option value="04">Ranieri Freitas</option>
+              <option value="05">Sérgio Grazia</option>
+            </select></div>
+
           <div class="field"><label>Empresa Executora</label><input type="text" id="empresa"
               placeholder="Razão social da empresa"></div>
           <div class="field"><label>Data do Relatório</label><input type="date" id="data"></div>
@@ -252,6 +258,7 @@
   <footer class="app-footer">RDF — Relatório Diário de Fiscalização · © 2026 Satel Brasil</footer>
   <script src="./scripts/main.js"></script>
   <script src="./scripts/gerarPDF.js"></script>
+  <script src="./scripts/gerarCSV.js"></script>
 
 </body>
 

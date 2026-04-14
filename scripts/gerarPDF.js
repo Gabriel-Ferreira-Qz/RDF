@@ -95,6 +95,16 @@ async function gerarPDF() {
             return String(v ?? '').trim() || 'N/A';
         }
 
+        const segmento = document.getElementById('segmento');
+        const responsavel = document.getElementById('responsavel')
+
+        const textoSeg = segmento.options[segmento.selectedIndex].text;
+        const textoRes = responsavel.options[responsavel.selectedIndex].text;
+
+        console.log(textoRes)
+        console.log(textoSeg)
+
+
         // ── Seção 1
         secHeader(1, 'Identificação da Atividade');
         fld('Segmento', safe(val('segmento')));
@@ -122,8 +132,6 @@ async function gerarPDF() {
             });
         }
         y += 4;
-
-        console.log(auths)
 
         // ── Seção 3
         secHeader(3, 'Segurança do Trabalho');
@@ -194,7 +202,6 @@ async function gerarPDF() {
                 doc.setFont('helvetica', 'normal'); doc.setFontSize(7.5); doc.setTextColor(...TX);
                 const cap = doc.splitTextToSize(photos[i].caption || '', PW2 - 4);
                 if (cap[0]) doc.text(cap[0], xPos + 2, yPos + PH2 + 5);
-                // badge número
                 doc.setFillColor(...CA); doc.roundedRect(xPos + 2, yPos + 2, 7, 5, 1, 1, 'F');
                 doc.setFont('helvetica', 'bold'); doc.setFontSize(6.5); doc.setTextColor(...WH);
                 doc.text(`${i + 1}`, xPos + 5.5, yPos + 5.8, { align: 'center' });
@@ -203,7 +210,6 @@ async function gerarPDF() {
             if (photos.length % 2 !== 0) y += 2;
         }
 
-        // Rodapé todas as páginas
         const total = doc.internal.getNumberOfPages();
         for (let p = 1; p <= total; p++) {
             doc.setPage(p);
@@ -213,11 +219,12 @@ async function gerarPDF() {
             doc.text(`Página ${p} / ${total}`, PW - MR, PH - 3.5, { align: 'right' });
         }
 
-        const dataStr = val('data') || hoje.toISOString().slice(0, 10);
-        doc.save(`RDF_${dataStr}.pdf`);
+        const nomeArquivoPDF = `RDF_${val('data') || 'sem-data'}_${val('segmento') || 'sem-segmeto'}_${val('projeto') || 'sem-projeto'}`
+        //doc.save(`${nomeArquivoPDF}.pdf`);
     } catch (err) {
         console.error(err); alert('Erro ao gerar PDF: ' + err.message);
     }
+
     btn.disabled = false;
     btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 11v1.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V11M7 1v8M4 6l3 3 3-3" stroke="#1A1917" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Exportar PDF`;
 }
