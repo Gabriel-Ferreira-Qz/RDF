@@ -98,12 +98,8 @@ async function gerarPDF() {
         const segmento = document.getElementById('segmento');
         const responsavel = document.getElementById('responsavel')
 
-        const textoSeg = segmento.options[segmento.selectedIndex].text;
-        const textoRes = responsavel.options[responsavel.selectedIndex].text;
-
-        console.log(textoRes)
-        console.log(textoSeg)
-
+        var textoSeg = segmento.options[segmento.selectedIndex].text;
+        var textoRes = responsavel.options[responsavel.selectedIndex].text;
 
         // ── Seção 1
         secHeader(1, 'Identificação da Atividade');
@@ -220,7 +216,7 @@ async function gerarPDF() {
         }
 
         const nomeArquivoPDF = `RDF_${val('data') || 'sem-data'}_${val('segmento') || 'sem-segmeto'}_${val('projeto') || 'sem-projeto'}`
-        //doc.save(`${nomeArquivoPDF}.pdf`);
+        doc.save(`${nomeArquivoPDF}.pdf`);
     } catch (err) {
         console.error(err); alert('Erro ao gerar PDF: ' + err.message);
     }
