@@ -7,55 +7,46 @@ function gerarCSV() {
   };
 
   const seg = document.getElementById('segmento');
+  const res = document.getElementById('responsavel');
+  const dt = document.getElementById('data').value;
+  const valData = dt.replace(/-/g, "");
 
-  const teste = seg.options[seg.selectedIndex].text;
-  //const dt = document.getElementById('data').value;
-  //var idSeg = seg.charCodeAt(seg.length-5);
-  //var idData = dt.replace(/-/g, "");
+  function idVal(id) {
+    const el = document.getElementById(id);
+    const textoId = el.options[el.selectedIndex].text
 
-  //const idRDF = idSeg + idData;
+    return textoId === 'Selecione...' ? '' : textoId;
+  }
 
 
-  //console.log(seg.options[seg.selectedIndex].text)
-
+  const idRDF = seg.value + res.value + valData;
 
   const esc = (v) => `"${String(v).replace(/"/g, '""')}"`;
 
   const identificacao = [
-    ['SEÇÃO', 'CAMPO', 'VALOR'],
-    ['Identificação', 'Segmento', val('segmento')],
-    ['Identificação', 'Projeto', val('projeto')],
-    ['Identificação', 'RDO', val('rdo')],
-    ['Identificação', 'Responsável Técnico', val('responsavel')],
-    ['Identificação', 'Empresa Executora', val('empresa')],
-    ['Identificação', 'Data do Relatório', val('data')],
-    ['Identificação', 'Período', val('periodo')],
-    ['Identificação', 'Início', val('ai-inicio')],
-    ['Identificação', 'Término', val('ai-termino')],
+    ['ID RDF', 'SEGMENTO', 'PROJETO', 'RDO', 'RESPOSÁVEL TÉCNICO', 'EMPRESA EXECUTORA', 'DATA DO RELATÓRIO', 'PERÍODO DA ATIVIDADE', 'INÍCIO DA ATIVIDADE', 'TÉRMINO DA ATIVIDADE', 'VIGÊNCIA DA AUTORIZAÇÃO', 'OBS AUTORIZAÇÃO', 'DDS REALIZADO?', 'POSSUI ARL?', 'TEVE INSPEÇÃO', 'ID', 'PA', 'TEMA DO DDS', 'HOSPITAL MAIS PRÓXIMO (PAE)', 'ENDEREÇO DO HOSPITAL', 'DESCRIÇÃO DA ATIVIDADE', 'ENDEREÇO', 'OBSERVAÇÃO DA ATIVIDADE', 'POCC', 'POCS', 'PT', 'SPOOL AÇO', 'SOLDA EM AÇO', 'TESTE', 'COMISSIONAMENTO', 'ASSENTAMENTO', 'RECOMPOSIÇÃO', 'HOUVE STOP WORK?', 'INÍCIO', 'TÉMINO', 'MOTIVO DA PARALIZAÇÃO'],
+    [idRDF, idVal('segmento'), val('projeto'), val('rdo'), idVal('responsavel'), val('empresa'), val('data'), val('periodo'), val('ai-inicio'), val('ai-termino')], 
   ];
-
+  
 
   const autorizacaoRows = [];
   const autorizacaoBody = document.querySelectorAll('#autorizacao-body tr');
 
+
   autorizacaoBody.forEach((row, i) => {
-    const inputs = row.querySelectorAll('input, select, textarea');
+    const inputs = row.querySelectorAll('input');
+    const textarea = row.querySelectorAll('textarea');
     inputs.forEach((el) => {
       const label = el.placeholder || el.getAttribute('data-label') || `Campo ${i + 1}`;
-      autorizacaoRows.push(['Autorização', label, el.value.trim()]);
+      const teste = el.value
+      autorizacaoRows.push([el.value.trim()]);
+      console.log(teste)
     });
   });
 
 
   const seguranca = [
-    ['Segurança', 'DDS Realizado', val('dds-realizado')],
-    ['Segurança', 'Possui ARL', val('arl')],
-    ['Segurança', 'Teve Inspeção', val('inspecao')],
-    ['Segurança', 'ID', val('seg-id')],
-    ['Segurança', 'PA', val('seg-pa')],
-    ['Segurança', 'Tema do DDS', val('dds-tema')],
-    ['Segurança', 'Hospital mais próximo', val('hospital')],
-    ['Segurança', 'Endereço do Hospital', val('hospital-end')],
+    []
   ];
 
 
@@ -71,22 +62,11 @@ function gerarCSV() {
   });
 
   const atividades = [
-    ['Atividades', 'POCC', val('pocc')],
-    ['Atividades', 'POCS', val('pocs')],
-    ['Atividades', 'PT', val('pt')],
-    ['Atividades', 'Spool Aço', val('spool')],
-    ['Atividades', 'Solda em Aço', val('solda')],
-    ['Atividades', 'Teste', val('teste')],
-    ['Atividades', 'Comissionamento', val('comissionamento')],
-    ['Atividades', 'Assentamento', val('assentamento')],
-    ['Atividades', 'Recomposição', val('recomposicao')],
+    []
   ];
 
   const stopWork = [
-    ['Stop Work', 'Houve Stop Work', val('stop-work-select')],
-    ['Stop Work', 'Início', val('sw-inicio')],
-    ['Stop Work', 'Término', val('sw-termino')],
-    ['Stop Work', 'Motivo', val('sw-motivo')],
+    []
   ];
 
 
@@ -108,14 +88,14 @@ function gerarCSV() {
     type: 'text/csv;charset=utf-8;'
   });
 
-  const nomeArquivoCSV = `RDF_${val('data') || 'sem-data'}_${val('segmento') || 'sem-segmento'}_${val('projeto') || 'sem-projeto'}.csv`
+  const nomeArquivoCSV = `RDF_${val('data') || 'sem-data'}_${idVal('segmento') || 'sem-segmento'}_${val('projeto') || 'sem-projeto'}.csv`
 
-  //const url = URL.createObjectURL(blob);
-  //const link = document.createElement('a');
-  //link.href = url;
-  //link.download = nomeArquivoCSV;
-  //document.body.appendChild(link);
-  //link.click();
-  //document.body.removeChild(link);
-  //URL.revokeObjectURL(url);
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = nomeArquivoCSV;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
 }

@@ -28,8 +28,8 @@ function addGroup(tbodyId, labels) {
     const body = g(tbodyId);
     const rows = labels.map((lbl, i) => {
         const inp = i < labels.length - 1
-            ? `<input type="text" placeholder="${lbl.ph || ''}" style="width:100%">`
-            : `<textarea placeholder="${lbl.ph || ''}" style="width:100%"></textarea>`;
+            ? `<input type="text" placeholder="${lbl.ph || ''}" id="${lbl.id || ''}" style="width:100%">`
+            : `<textarea placeholder="${lbl.ph || ''}" id="${lbl.id}" style="width:100%"></textarea>`;
         return makeRow([`<label>${lbl.label}</label>${inp}`], null);
     });
 
@@ -46,15 +46,15 @@ function addGroup(tbodyId, labels) {
 
 function addAutorizacao() {
     addGroup('autorizacao-body', [
-        { label: 'Vigência da Autorização', ph: 'Ex.: 01/01/2025 a 31/01/2025' },
-        { label: 'Observação', ph: '...' }
+        { label: 'Vigência da Autorização', ph: 'Ex.: 01/01/2025 a 31/01/2025', id:'vigencia' },
+        { label: 'Observação', ph: '...', id:'obs-vigencia' }
     ]);
 }
 function addAtiv() {
     addGroup('atividade-body', [
-        { label: 'Descrição da Atividade', ph: 'Ex.: Concretagem da laje' },
-        { label: 'Endereço', ph: 'Ex.: Pav. 3' },
-        { label: 'Observação', ph: '...' }
+        { label: 'Descrição da Atividade', ph: 'Ex.: Concretagem da laje', id: 'descricao' },
+        { label: 'Endereço', ph: 'Ex.: Pav. 3', id: 'endereco' },
+        { label: 'Observação', ph: '...', id: 'obs-atividade' }
     ]);
 }
 

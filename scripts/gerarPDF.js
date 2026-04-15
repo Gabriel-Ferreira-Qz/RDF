@@ -91,24 +91,25 @@ async function gerarPDF() {
             return groups;
         }
 
-        function safe(v) {
+        function campoNa(v) {
             return String(v ?? '').trim() || 'N/A';
         }
 
-        const segmento = document.getElementById('segmento');
-        const responsavel = document.getElementById('responsavel')
+        function idVal(id) {
+            const el = document.getElementById(id);
+            const textoId = el.options[el.selectedIndex].text
 
-        var textoSeg = segmento.options[segmento.selectedIndex].text;
-        var textoRes = responsavel.options[responsavel.selectedIndex].text;
+            return textoId === 'Selecione...' ? '' : textoId;
+        }
 
         // ── Seção 1
         secHeader(1, 'Identificação da Atividade');
-        fld('Segmento', safe(val('segmento')));
-        fld('Projeto', safe(val('projeto')));
-        fld2('RDO', safe(val('rdo')), 'Responsável Técnico', safe(val('responsavel')));
-        fld2('Empresa Executora', safe(val('empresa')), 'Data do Relatório', safe(val('data')));
-        fld('Período', safe(val('periodo')));
-        fld2('Início', safe(val('ai-inicio')), 'Término', safe(val('ai-termino')));
+        fld('Segmento', campoNa(idVal('segmento')));
+        fld('Projeto', campoNa(val('projeto')));
+        fld2('RDO', campoNa(val('rdo')), 'Responsável Técnico', campoNa(idVal('responsavel')));
+        fld2('Empresa Executora', campoNa(val('empresa')), 'Data do Relatório', campoNa(val('data')));
+        fld('Período', campoNa(val('periodo')));
+        fld2('Início', campoNa(val('ai-inicio')), 'Término', campoNa(val('ai-termino')));
         y += 4;
 
         // ── Seção 2
@@ -131,11 +132,11 @@ async function gerarPDF() {
 
         // ── Seção 3
         secHeader(3, 'Segurança do Trabalho');
-        fld2('DDS Realizado?', safe(val('dds-realizado')), 'Possui ARL?', safe(val('arl')));
-        fld2('Teve Inspeção?', safe(val('inspecao')), 'ID', safe(val('seg-id')));
-        fld2('PA', safe(val('seg-pa')), 'Tema do DDS', safe(val('dds-tema')));
-        fld('Hospital mais próximo (PAE)', safe(val('hospital')));
-        fld('Endereço do Hospital', safe(val('hospital-end')));
+        fld2('DDS Realizado?', campoNa(val('dds-realizado')), 'Possui ARL?', campoNa(val('arl')));
+        fld2('Teve Inspeção?', campoNa(val('inspecao')), 'ID', campoNa(val('seg-id')));
+        fld2('PA', campoNa(val('seg-pa')), 'Tema do DDS', campoNa(val('dds-tema')));
+        fld('Hospital mais próximo (PAE)', campoNa(val('hospital')));
+        fld('Endereço do Hospital', campoNa(val('hospital-end')));
         y += 4;
 
         // ── Seção 4
@@ -155,17 +156,17 @@ async function gerarPDF() {
                 y += 2;
             });
         }
-        fld2('POCC', safe(val('pocc')), 'POCS', safe(val('pocs')));
-        fld2('PT', safe(val('pt')), 'Spool Aço', safe(val('spool')));
-        fld2('Solda em Aço', safe(val('solda')), 'Teste', safe(val('teste')));
-        fld2('Comissionamento', safe(val('comissionamento')), 'Assentamento', safe(val('assentamento')));
-        fld('Recomposição', safe(val('recomposicao')));
+        fld2('POCC', campoNa(val('pocc')), 'POCS', campoNa(val('pocs')));
+        fld2('PT', campoNa(val('pt')), 'Spool Aço', campoNa(val('spool')));
+        fld2('Solda em Aço', campoNa(val('solda')), 'Teste', campoNa(val('teste')));
+        fld2('Comissionamento', campoNa(val('comissionamento')), 'Assentamento', campoNa(val('assentamento')));
+        fld('Recomposição', campoNa(val('recomposicao')));
         y += 4;
 
         // ── Seção 5
         secHeader(5, 'Stop Work');
         const sw = val('stop-work-select');
-        fld('Houve Stop Work?', safe(sw));
+        fld('Houve Stop Work?', campoNa(sw));
         if (sw === 'Sim') {
             fld2('Início', val('sw-inicio'), 'Término', val('sw-termino'));
             fldM('Motivo da Paralização', val('sw-motivo'));
