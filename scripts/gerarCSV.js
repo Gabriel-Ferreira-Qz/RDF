@@ -1,4 +1,3 @@
-const teste = val(1)
 function gerarCSV() {
   const val = (id) => {
     const el = document.getElementById(id);
@@ -9,7 +8,13 @@ function gerarCSV() {
   const seg = document.getElementById('segmento');
   const res = document.getElementById('responsavel');
   const dt = document.getElementById('data').value;
-  const valData = dt.replace(/-/g, "");
+  const valData = dt.replace(/[-0]/g, "");
+
+  const idRDF = seg.value + res.value + valData;
+
+  function campoNa(v) {
+    return String(v ?? '').trim() || 'N/A';
+  }
 
   function idVal(id) {
     const el = document.getElementById(id);
@@ -18,48 +23,110 @@ function gerarCSV() {
     return textoId === 'Selecione...' ? '' : textoId;
   }
 
-  const idRDF = seg.value + res.value + valData;
-
-  console.log(idRDF)
-
   const esc = (v) => `"${String(v).replace(/"/g, '""')}"`;
 
-  const identificacao = [
-    ['ID RDF', 'SEGMENTO', 'PROJETO', 'RDO', 'RESPONSÁVEL TÉCNICO', 'EMPRESA EXECUTORA', 'DATA DO RELATÓRIO', 'PERÍODO DA ATIVIDADE', 'INÍCIO DA ATIVIDADE', 'TÉRMINO DA ATIVIDADE', 'VIGÊNCIA DA AUTORIZAÇÃO', 'OBSERVAÇÃO AUTORIZAÇÃO', 'DDS REALIZADO?', 'POSSUI ARL?', 'TEVE INSPEÇÃO?', 'ID', 'PA', 'TEMA DO DDS', 'HOSPITAL MAIS PRÓXIMO (PAE)', 'ENDEREÇO DO HOSPITAL', 'DESCRIÇÃO DA ATIVIDADE', 'ENDEREÇO DA ATIVIDADE', 'OBSERVAÇÃO DA ATIVIDADE', 'POCC', 'POCS', 'PT', 'SPOOL AÇO', 'SOLDA EM AÇO', 'TESTE', 'COMISSIONAMENTO', 'ASSENTAMENTO', 'RECOMPOSIÇÃO', 'HOUVE STOP WORK?', 'INÍCIO DO STOP WORK', 'TÉRMINO DO STOP WORK', 'MOTIVO DA PARALISAÇÃO'],
-    [idRDF, idVal('segmento'), val('projeto'), val('rdo'), idVal('responsavel'), val('empresa'), val('data'), val('periodo'), val('ai-inicio'), val('ai-termino'), 'AJUSTAR CAMPO AUTORIZACAO 1', 'AJUSTAR CAMPO AUTORIZACAO 2',  val('dds-realizado'), val('arl'), val('inspecao'), val('seg-id'), val('seg-pa'), val('dds-tema'), val('hospital'), val('hospital-end'), 'AJUSTAR CAMPO ATIVIDADE 1', 'AJUSTAR CAMPO ATIVIDADE 2', 'AJUSTAR CAMPO ATIVIDADE 3',  val('pocc'), val('pocs'), val('pt'), val('spool'), val('solda'), val('teste'), val('comissionamento'), val('assentamento'), val('recomposicao'),  val('stop-work-select'), val('sw-inicio'), val('sw-termino'), val('sw-motivo')],
-  ];
 
-  const autorizacaoRows = [];
-  const autorizacaoBody = document.querySelectorAll('#autorizacao-body tr');
-
-
-  autorizacaoBody.forEach((row, i) => {
-    const inputs = row.querySelectorAll('input');
-    const textarea = row.querySelectorAll('textarea');
-    inputs.forEach((el) => {
-      const label = el.placeholder || el.getAttribute('data-label') || `Campo ${i + 1}`;
-      const teste = el.value
-      autorizacaoRows.push([el.value.trim()]);
-    });
-  });
-
-
-  const atividadeRows = [];
+  const atividades = [];
   const atividadeBody = document.querySelectorAll('#atividade-body tr');
 
-  atividadeBody.forEach((row, i) => {
-    const inputs = row.querySelectorAll('input, select, textarea');
-    inputs.forEach((el) => {
-      const label = el.placeholder || el.getAttribute('data-label') || `Campo ${i + 1}`;
-      atividadeRows.push(['Atividades', label, el.value.trim()]);
-    });
+  atividadeBody.forEach(( row, i ) => {
+    if (row.dataset.groupStart === 'true') {
+      const input1 = row.querySelector('input');
+      const input2 = row.nextElementSibling?.querySelector('input');
+      const textarea = row.nextElementSibling?.nextElementSibling?.querySelector('textarea');
+      
+      atividades.push({
+        descricao: input1?.value.trim() || 'N/A',
+        endereco: input2?.value.trim() || 'N/A',
+        observacao: textarea?.value.trim() || 'N/A',
+        idAtividade: idRDF + (i),
+      });
+      console.log(i)
+    }
   });
 
-  const todasAsLinhas = [
-    ...identificacao,
-    ...autorizacaoRows,
-    ...atividadeRows,
+
+  const cabecalho = [
+    'ID RDF',
+    'SEGMENTO',
+    'PROJETO',
+    'RDO',
+    'RESPONSÁVEL TÉCNICO',
+    'EMPRESA EXECUTORA',
+    'DATA DO RELATÓRIO',
+    'PERÍODO DA ATIVIDADE',
+    'INÍCIO DA ATIVIDADE',
+    'TÉRMINO DA ATIVIDADE',
+    'VIGÊNCIA DA AUTORIZAÇÃO',
+    'OBSERVAÇÃO AUTORIZAÇÃO',
+    'DDS REALIZADO?',
+    'POSSUI ARL?',
+    'TEVE INSPEÇÃO?',
+    'ID',
+    'PA',
+    'TEMA DO DDS',
+    'HOSPITAL MAIS PRÓXIMO (PAE)',
+    'ENDEREÇO DO HOSPITAL',
+    'DESCRIÇÃO DA ATIVIDADE',
+    'ENDEREÇO DA ATIVIDADE',
+    'OBSERVAÇÃO DA ATIVIDADE',
+    'POCC',
+    'POCS',
+    'PT',
+    'SPOOL AÇO',
+    'SOLDA EM AÇO',
+    'TESTE',
+    'COMISSIONAMENTO',
+    'ASSENTAMENTO',
+    'RECOMPOSIÇÃO',
+    'HOUVE STOP WORK?',
+    'INÍCIO DO STOP WORK',
+    'TÉRMINO DO STOP WORK',
+    'MOTIVO DA PARALISAÇÃO'
   ];
+
+  const todasAsLinhas = [
+    cabecalho,
+    ...atividades.map(({ descricao, endereco, observacao, idAtividade }) => [
+      idRDF,
+      campoNa(idVal('segmento')),
+      campoNa(val('projeto')),
+      campoNa(val('rdo')),
+      campoNa(idVal('responsavel')),
+      campoNa(val('empresa')),
+      campoNa(val('data')),
+      campoNa(val('periodo')),
+      campoNa(val('ai-inicio')),
+      campoNa(val('ai-termino')),
+      campoNa(val('dds-realizado')),
+      campoNa(val('arl')),
+      campoNa(val('inspecao')),
+      campoNa(val('seg-id')),
+      campoNa(val('seg-pa')),
+      campoNa(val('dds-tema')),
+      campoNa(val('hospital')),
+      campoNa(val('hospital-end')),
+      idAtividade,
+      descricao,
+      endereco,
+      observacao,
+      campoNa(val('pocc')),
+      campoNa(val('pocs')),
+      campoNa(val('pt')),
+      campoNa(val('spool')),
+      campoNa(val('solda')),
+      campoNa(val('teste')),
+      campoNa(val('comissionamento')),
+      campoNa(val('assentamento')),
+      campoNa(val('recomposicao')),
+      campoNa(val('stop-work-select')),
+      campoNa(val('sw-inicio')),
+      campoNa(val('sw-termino')),
+      campoNa(val('sw-motivo'))
+    ])
+  ];
+
+   console.log(todasAsLinhas);
 
   const csvContent = todasAsLinhas
     .map(row => row.map(esc).join(','))
@@ -70,7 +137,7 @@ function gerarCSV() {
     type: 'text/csv;charset=utf-8;'
   });
 
-  const nomeArquivoCSV = `RDF_${val('data') || 'sem-data'}_${idVal('segmento') || 'sem-segmento'}_${val('projeto') || 'sem-projeto'}.csv`
+  const nomeArquivoCSV = `RDF_${val('data') || 'sem-data'}_${idVal('segmento') || 'sem-segmento'}_${idVal('responsavel') || 'sem-responsavel'}.csv`
 
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');

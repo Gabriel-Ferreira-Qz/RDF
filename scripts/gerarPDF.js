@@ -212,11 +212,11 @@ async function gerarPDF() {
             doc.setPage(p);
             doc.setFillColor(...CA); doc.rect(0, PH - 10, PW, 10, 'F');
             doc.setFont('helvetica', 'normal'); doc.setFontSize(7); doc.setTextColor(160, 190, 215);
-            doc.text('RDF — Relatório Diário de Fiscalização', ML, PH - 3.5);
+            doc.text('Satel Brasil — Relatório Diário de Fiscalização', ML, PH - 3.5);
             doc.text(`Página ${p} / ${total}`, PW - MR, PH - 3.5, { align: 'right' });
         }
 
-        const nomeArquivoPDF = `RDF_${val('data') || 'sem-data'}_${idVal('segmento') || 'sem-segmeto'}_${val('projeto') || 'sem-projeto'}`
+        const nomeArquivoPDF = `RDF_${val('data') || 'sem-data'}_${idVal('segmento') || 'sem-segmeto'}_${idVal('responsavel') || 'sem-responsavel'}`
         doc.save(`${nomeArquivoPDF}.pdf`);
     } catch (err) {
         console.error(err); alert('Erro ao gerar PDF: ' + err.message);
