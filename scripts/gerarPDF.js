@@ -216,7 +216,7 @@ async function gerarPDF() {
             doc.text(`Página ${p} / ${total}`, PW - MR, PH - 3.5, { align: 'right' });
         }
 
-        const nomeArquivoPDF = `RDF_${val('data') || 'sem-data'}_${val('segmento') || 'sem-segmeto'}_${val('projeto') || 'sem-projeto'}`
+        const nomeArquivoPDF = `RDF_${val('data') || 'sem-data'}_${idVal('segmento') || 'sem-segmeto'}_${val('projeto') || 'sem-projeto'}`
         doc.save(`${nomeArquivoPDF}.pdf`);
     } catch (err) {
         console.error(err); alert('Erro ao gerar PDF: ' + err.message);
