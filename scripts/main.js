@@ -1,14 +1,51 @@
 const g = id => document.getElementById(id);
-const val = id => (g(id)?.value?.trim()) || '';
+const val = id => (g(id)?.value?.trim()) || ''
 
-// Data auto-fill
+// Responsavel
+const segmento = document.getElementById('segmento');
+const responsavel = document.getElementById('responsavel');
+
+const opcoesOriginais = [...responsavel.options].map(opt => ({
+  value: opt.value,
+  text: opt.text,
+  className: opt.className
+}));
+
+function filtrarResponsavel() {
+  const isSeguranca = segmento.value === '5';
+
+  responsavel.innerHTML = '';
+
+  opcoesOriginais.forEach(opt => {
+    const ehPadrao = opt.value === '';
+    const ehTecGas = opt.className === 'tecGas';
+    const ehTecSeguranca = opt.className === 'tecSeguranca';
+
+    if (
+      ehPadrao ||
+      (isSeguranca && ehTecSeguranca) ||
+      (!isSeguranca && ehTecGas)
+    ) {
+      responsavel.add(new Option(opt.text, opt.value));
+    }
+  });
+
+  responsavel.value = '';
+
+}
+
+segmento.addEventListener('change', filtrarResponsavel);
+
+// Data
 const dataInput = g('data');
 const hoje = new Date();
 hoje.setMinutes(hoje.getMinutes() - hoje.getTimezoneOffset());
 dataInput.value = hoje.toISOString().slice(0, 10);
 
 // Stop Work
-function toggleStopWork(v) { g('stop-work-extra').style.display = v === 'Sim' ? 'block' : 'none'; }
+function alternarStopWork(v) { g('stop-work-extra').style.display = v === 'Sim' ? 'block' : 'none'; }
+
+//Segurança do trabalho
 
 // makeRow helper
 function makeRow(cells, onDel) {
@@ -46,8 +83,8 @@ function addGroup(tbodyId, labels) {
 
 function addAutorizacao() {
     addGroup('autorizacao-body', [
-        { label: 'Vigência da Autorização', ph: 'Ex.: 01/01/2025 a 31/01/2025', id:'vigencia' },
-        { label: 'Observação', ph: '...', id:'obs-vigencia' }
+        { label: 'Vigência da Autorização', ph: 'Ex.: 01/01/2025 a 31/01/2025', id: 'vigencia' },
+        { label: 'Observação', ph: '...', id: 'obs-vigencia' }
     ]);
 }
 function addAtiv() {

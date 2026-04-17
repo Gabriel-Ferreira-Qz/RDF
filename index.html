@@ -50,7 +50,9 @@
       <div class="section-body">
         <div class="grid-2">
 
-          <div class="field col-span-2"><label>Segmento</label><select id="segmento">
+          <div class="field col-span-2">
+            <label>Segmento</label>
+            <select id="segmento" >
               <option value="">Selecione...</option>
               <option value="1">Manutenção e Operações de Rede</option>
               <option value="2">Assistência Técnica</option>
@@ -60,34 +62,43 @@
             </select>
           </div>
 
-          <div class="field col-span-2"><label>Projeto</label><input type="text" id="projeto"
-              placeholder="Ex: Troca de Bateria ISA"></div>
-          <div class="field"><label>RDO</label><select id="rdo">
+          <div class="field col-span-2">
+            <label>Projeto</label>
+            <input type="text" id="projeto" placeholder="Ex: Troca de Bateria ISA">
+          </div>
+
+          <div class="field">
+            <label>RDO</label>
+            <select id="rdo">
               <option value="">Selecione...</option>
               <option>Sim</option>
               <option>Não</option>
-            </select></div>
+            </select>
+          </div>
 
-          <div class="field"><label>Responsável Técnico</label><select id="responsavel">
+          <div class="field">
+            <label>Responsável Técnico</label>
+            <select id="responsavel">
               <option value="">Selecione...</option>
-              <option value="1">Ricardo Alves</option>
-              <option value="2">Luiz Ricardo</option>
-              <option value="3">Felipe Silva</option>
-              <option value="4">Ranieri Freitas</option>
-              <option value="5">Sérgio Grazia</option>
-              <option value="6">Tecnico 6</option>
-              <option value="7">Tecnico 7</option>
-              <option value="8">Tecnico 8</option>
-              <option value="9">Tecnico 9</option>
-              <option value="10">Tecnico 10</option>
-              <option value="11">Tecnico 11</option>
-              <option value="12">Tecnico 12</option>
-              <option value="13">Tecnico 13</option>
-              <option value="14">Tecnico 14</option>
-              <option value="15">Tecnico 15</option>
-              <option value="16">Tecnico 16</option>
-              <option value="17">Tecnico 17</option>
-            </select></div>
+              <option value="1" class="tecGas">Ricardo Alves</option>
+              <option value="2" class="tecGas">Luiz Ricardo</option>
+              <option value="3" class="tecGas">Felipe Silva</option>
+              <option value="4" class="tecGas">Ranieri Freitas</option>
+              <option value="5" class="tecGas">Sérgio Grazia</option>
+              <option value="6" class="tecSeguranca">Tecnico 6</option>
+              <option value="7" class="tecSeguranca">Tecnico 7</option>
+              <option value="8" class="tecSeguranca">Tecnico 8</option>
+              <option value="9" class="tecSeguranca">Tecnico 9</option>
+              <option value="10" class="tecSeguranca">Tecnico 10</option>
+              <option value="11" class="tecSeguranca">Tecnico 11</option>
+              <option value="12" class="tecSeguranca">Tecnico 12</option>
+              <option value="13" class="tecSeguranca">Tecnico 13</option>
+              <option value="14" class="tecSeguranca">Tecnico 14</option>
+              <option value="15" class="tecSeguranca">Tecnico 15</option>
+              <option value="16" class="tecSeguranca">Tecnico 16</option>
+              <option value="17" class="tecSeguranca">Tecnico 17</option>
+            </select>
+          </div>
 
           <div class="field"><label>Empresa Executora</label><input type="text" id="empresa"
               placeholder="Razão social da empresa"></div>
@@ -224,7 +235,7 @@
       <div class="section-body">
         <div class="field">
           <label>Houve Stop Work?</label>
-          <select id="stop-work-select" onchange="toggleStopWork(this.value)">
+          <select id="stop-work-select" onchange="alternarStopWork(this.value)">
             <option value="">Selecione...</option>
             <option>Sim</option>
             <option>Não</option>

@@ -41,7 +41,6 @@ function gerarCSV() {
         observacao: textarea?.value.trim() || 'N/A',
         idAtividade: idRDF + (i),
       });
-      console.log(i)
     }
   });
 
@@ -125,8 +124,6 @@ function gerarCSV() {
       campoNa(val('sw-motivo'))
     ])
   ];
-
-   console.log(todasAsLinhas);
 
   const csvContent = todasAsLinhas
     .map(row => row.map(esc).join(','))
