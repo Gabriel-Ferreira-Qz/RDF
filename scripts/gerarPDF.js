@@ -40,7 +40,7 @@ async function gerarPDF() {
             doc.setFont('helvetica', 'bold'); doc.setFontSize(6.5); doc.setTextColor(...MU);
             doc.text(label.toUpperCase(), ML + 3, y + 4);
             doc.setFont('helvetica', 'normal'); doc.setFontSize(9); doc.setTextColor(...TX);
-            doc.text(doc.splitTextToSize(value || '—', CW - 6)[0], ML + 3, y + fh - 2.5);
+            doc.text(doc.splitTextToSize(value || '—', CW - 6)[0], ML + 3, y + fh - 1.5);
             y += fh + 1;
         }
 
@@ -157,7 +157,8 @@ async function gerarPDF() {
             });
         }
         fld2('POCC', campoNa(val('pocc')), 'POCS', campoNa(val('pocs')));
-        fld2('PT', campoNa(val('pt')), 'Spool Aço', campoNa(val('spool')));
+        fldM('PT', campoNa(val('pt')));
+        fld('Spool Aço', campoNa(val('spool')))
         fld2('Solda em Aço', campoNa(val('solda')), 'Teste', campoNa(val('teste')));
         fld2('Comissionamento', campoNa(val('comissionamento')), 'Assentamento', campoNa(val('assentamento')));
         fld('Recomposição', campoNa(val('recomposicao')));
@@ -172,9 +173,14 @@ async function gerarPDF() {
             fldM('Motivo da Paralização', val('sw-motivo'));
         }
         y += 4;
+        
+        //── Seção 6 — Fotos
+        secHeader(6, 'Detalhamento de Atividade');
+        fldM('Detalhamento de Atividade', val('detalhe-atv'));
+        y +=4;
 
-        // ── Seção 6 — Fotos
-        secHeader(6, 'Registro Fotográfico');
+        // ── Seção 7 — Fotos
+        secHeader(7, 'Registro Fotográfico');
         if (!photos.length) {
             doc.setFont('helvetica', 'italic'); doc.setFontSize(8.5); doc.setTextColor(...MU);
             doc.text('Nenhuma foto registrada.', ML + 3, y + 4); y += 10;
