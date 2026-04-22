@@ -90,7 +90,7 @@ function validarAtividades() {
 
 document.getElementById('btn-exportar').addEventListener('click', function () {
     if (!validarCamposObrigatorios()) return;
-    if (!validarAtividades()) return
+    if (!validarAtividades()) return;
     gerarXLSX();
 });
 
