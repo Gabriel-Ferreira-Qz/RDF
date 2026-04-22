@@ -1,6 +1,3 @@
-// ─────────────────────────────────────────────
-// VALIDAÇÃO DE CAMPOS OBRIGATÓRIOS
-// ─────────────────────────────────────────────
 function validarCamposObrigatorios() {
     const campos = [
         { id: 'segmento',         nome: 'Segmento' },
@@ -8,14 +5,28 @@ function validarCamposObrigatorios() {
         { id: 'rdo',              nome: 'RDO' },
         { id: 'responsavel',      nome: 'Responsável Técnico' },
         { id: 'empresa',          nome: 'Empresa Executora' },
-        { id: 'data',             nome: 'Data do Relatório' },
         { id: 'periodo',          nome: 'Período' },
         { id: 'ai-inicio',        nome: 'Horário de Início' },
         { id: 'ai-termino',       nome: 'Horário de Término' },
         { id: 'dds-realizado',    nome: 'DDS Realizado?' },
         { id: 'arl',              nome: 'Possui ARL?' },
         { id: 'inspecao',         nome: 'Teve Inspeção?' },
+        { id: 'seg-id',           nome: 'ID'},
+        { id: 'seg-pa',           nome: 'PA'},
+        { id: 'dds-tema',         nome: 'Tema do DDS'},
+        { id: 'hospital',         nome: 'Hospital mais próximo (PAE)'},
+        { id: 'hospital-end',     nome: 'Endereço do Hospital'},
+        { id: 'pocc',             nome: 'POCC'},
+        { id: 'pocs',             nome: 'POCS'},
+        { id: 'pt',               nome: 'PT'},
+        { id: 'spool',            nome: 'Spool Aço'},
+        { id: 'solda',            nome: 'Solda em Aço'},
+        { id: 'teste',            nome: 'Teste'},
+        { id: 'comissionamento',  nome: 'Comissionamento'},
+        { id: 'assentamento',     nome: 'Assentamento'},
+        { id: 'recomposicao',     nome: 'Recomposição'},
         { id: 'stop-work-select', nome: 'Houve Stop Work?' },
+        { id: 'detalhe-atv',      nome: 'Informe os detalhes da atividade'}
     ];
  
     const vazios = [];
@@ -44,17 +55,13 @@ function validarCamposObrigatorios() {
     return true;
 }
  
-// ─────────────────────────────────────────────
-// BOTÃO EXPORTAR CSV (com validação)
-// ─────────────────────────────────────────────
+
 document.getElementById('btn-exportar').addEventListener('click', function () {
     if (!validarCamposObrigatorios()) return;
     gerarCSV();
 });
  
-// ─────────────────────────────────────────────
-// EXPORTAR CSV
-// ─────────────────────────────────────────────
+
 function gerarCSV() {
   const val = (id) => {
     const el = document.getElementById(id);
