@@ -1,4 +1,7 @@
 async function gerarPDF() {
+    // ── Validação: bloqueia exportação se houver campos obrigatórios vazios
+    if (!validarCamposObrigatorios()) return;
+
     const btn = g('btn-exportar-pdf');
     btn.disabled = true; btn.textContent = 'Gerando...';
     try {

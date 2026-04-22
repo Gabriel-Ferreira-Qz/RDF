@@ -397,3 +397,9 @@ textarea {
     color: var(--c-muted);
     font-family: var(--mono)
 }
+
+.campo-invalido {
+  border: 2px solid #e53e3e !important;
+  background-color: #fff5f5 !important;
+  border-radius: 4px;
+}
