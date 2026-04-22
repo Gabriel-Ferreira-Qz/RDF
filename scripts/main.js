@@ -87,6 +87,7 @@ function addAutorizacao() {
         { label: 'Observação', ph: '...', id: 'obs-vigencia' }
     ]);
 }
+
 function addAtiv() {
     addGroup('atividade-body', [
         { label: 'Descrição da Atividade', ph: 'Ex.: Concretagem da laje', id: 'descricao' },

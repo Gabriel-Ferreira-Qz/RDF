@@ -54,9 +54,43 @@ function validarCamposObrigatorios() {
     return true;
 }
 
+function validarAtividades() {
+    const rows = document.querySelectorAll('#atividade-body tr[data-group-start="true"]');
+
+    if (rows.length === 0) {
+        alert('⚠️ Adicione pelo menos uma atividade antes de exportar.');
+        return false;
+    }
+
+    let valido = true;
+
+    rows.forEach((row, i) => {
+        const input1 = row.querySelector('input');
+        const input2 = row.nextElementSibling?.querySelector('input');
+
+        [input1, input2].forEach(el => {
+            if (!el) return;
+            if (!el.value.trim()) {
+                el.classList.add('campo-invalido');
+                el.addEventListener('input', () => el.classList.remove('campo-invalido'), { once: true });
+                valido = false;
+            }
+        });
+    });
+
+    if (!valido) {
+        alert('⚠️ Preencha os campos obrigatórios em todas as atividades.');
+        document.querySelector('#atividade-body .campo-invalido')
+            ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    return valido;
+}
+
 
 document.getElementById('btn-exportar').addEventListener('click', function () {
     if (!validarCamposObrigatorios()) return;
+    if (!validarAtividades()) return
     gerarXLSX();
 });
 
@@ -77,7 +111,7 @@ function montarDados() {
 
     function campoNa(v) {
         return String(v ?? '').trim() || 'N/A';
-    }
+    } 
 
     function idVal(id) {
         const el = document.getElementById(id);
@@ -114,8 +148,6 @@ function montarDados() {
         'PERÍODO DA ATIVIDADE',
         'INÍCIO DA ATIVIDADE',
         'TÉRMINO DA ATIVIDADE',
-        'VIGÊNCIA DA AUTORIZAÇÃO',
-        'OBSERVAÇÃO AUTORIZAÇÃO',
         'DDS REALIZADO?',
         'POSSUI ARL?',
         'TEVE INSPEÇÃO?',
@@ -124,6 +156,7 @@ function montarDados() {
         'TEMA DO DDS',
         'HOSPITAL MAIS PRÓXIMO (PAE)',
         'ENDEREÇO DO HOSPITAL',
+        'ID ATIVIDADE',
         'DESCRIÇÃO DA ATIVIDADE',
         'ENDEREÇO DA ATIVIDADE',
         'OBSERVAÇÃO DA ATIVIDADE',
@@ -182,7 +215,6 @@ function montarDados() {
             campoNa(val('sw-motivo'))
         ])
     ];
-
     return { todasAsLinhas, val, idVal };
 }
 
