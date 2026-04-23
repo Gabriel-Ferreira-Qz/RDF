@@ -120,7 +120,7 @@ async function gerarPDF() {
         const auths = collectGroups('autorizacao-body');
         if (!auths.length) {
             doc.setFont('helvetica', 'italic'); doc.setFontSize(8.5); doc.setTextColor(...MU);
-            doc.text('Nenhuma autorização registrada.', ML + 3, y + 4); y += 10;
+            doc.text('N/A.', ML + 3, y + 4); y += 10;
         } else {
             auths.forEach((gr, i) => {
                 newPageIfNeeded(8);

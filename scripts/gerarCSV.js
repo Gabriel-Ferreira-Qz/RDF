@@ -219,7 +219,7 @@ function montarDados() {
 }
 
 
-function gerarXLSX() {
+function gerarCSV() {
     const { todasAsLinhas, val, idVal } = montarDados();
 
     const esc = (v) => `"${String(v).replace(/"/g, '""')}"`;
