@@ -176,11 +176,13 @@ async function gerarPDF() {
             fldM('Motivo da Paralização', val('sw-motivo'));
         }
         y += 4;
-        
-        //── Seção 6 — Fotos
+
+        //── Seção 6 — Detalhamento de Atividade
         secHeader(6, 'Detalhamento de Atividade');
         fldM('Detalhamento de Atividade', val('detalhe-atv'));
-        y +=4;
+        y += 4;
+
+        console.log(campoNa(val('detalhe-atv')))
 
         // ── Seção 7 — Fotos
         secHeader(7, 'Registro Fotográfico');

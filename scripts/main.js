@@ -66,7 +66,7 @@ function addGroup(tbodyId, labels) {
     const rows = labels.map((lbl, i) => {
         const inp = i < labels.length - 1
             ? `<input type="text" placeholder="${lbl.ph || ''}" id="${lbl.id || ''}" style="width:100%">`
-            : `<textarea placeholder="${lbl.ph || ''}" id="${lbl.id}" style="width:100%"></textarea>`;
+            : `<textarea placeholder="${lbl.ph || ''}" id="${lbl.id}" style="width:100% ; height: 350px"></textarea>`;
         return makeRow([`<label>${lbl.label}</label>${inp}`], null);
     });
 

@@ -403,3 +403,7 @@ textarea {
   background-color: #fff5f5 !important;
   border-radius: 4px;
 }
+
+.detalhe-atv {
+    height: 500px;
+}
