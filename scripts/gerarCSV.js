@@ -256,3 +256,4 @@ function gerarXLSX() {
 
     XLSX.writeFile(wb, nomeArquivo);
 }
+//att
