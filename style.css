@@ -407,3 +407,10 @@ textarea {
 .detalhe-atv {
     height: 500px;
 }
+
+.ast-obrigatorio::after
+{
+    content: " *";
+    color: #e53e3e;
+    font-size: 15px;
+}

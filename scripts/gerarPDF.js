@@ -182,8 +182,6 @@ async function gerarPDF() {
         fldM('Detalhamento de Atividade', val('detalhe-atv'));
         y += 4;
 
-        console.log(campoNa(val('detalhe-atv')))
-
         // ── Seção 7 — Fotos
         secHeader(7, 'Registro Fotográfico');
         if (!photos.length) {

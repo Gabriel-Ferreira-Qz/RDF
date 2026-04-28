@@ -51,7 +51,7 @@
         <div class="grid-2">
 
           <div class="field col-span-2">
-            <label>Segmento</label>
+            <label class="ast-obrigatorio">Segmento</label>
             <select id="segmento">
               <option value="">Selecione...</option>
               <option value="1">Manutenção e Operações de Rede</option>
@@ -63,12 +63,12 @@
           </div>
 
           <div class="field col-span-2">
-            <label>Projeto</label>
+            <label class="ast-obrigatorio">Projeto</label>
             <input type="text" id="projeto" placeholder="Ex: Troca de Bateria ISA">
           </div>
 
           <div class="field">
-            <label>RDO</label>
+            <label class="ast-obrigatorio">RDO</label>
             <select id="rdo">
               <option value="">Selecione...</option>
               <option>Sim</option>
@@ -77,7 +77,7 @@
           </div>
 
           <div class="field">
-            <label>Responsável Técnico</label>
+            <label class="ast-obrigatorio">Responsável Técnico</label>
             <select id="responsavel">
               <option value="">Selecione...</option>
               <option value="1" class="tecGas">Ricardo Alves</option>
@@ -100,18 +100,18 @@
             </select>
           </div>
 
-          <div class="field"><label>Empresa Executora</label><input type="text" id="empresa"
+          <div class="field"><label class="ast-obrigatorio">Empresa Executora</label><input type="text" id="empresa"
               placeholder="Nome da empresa"></div>
-          <div class="field"><label>Data do Relatório</label><input type="date" id="data"></div>
-          <div class="field"><label>Período</label><select id="periodo">
+          <div class="field"><label class="ast-obrigatorio">Data do Relatório</label><input type="date" id="data"></div>
+          <div class="field"><label class="ast-obrigatorio">Período</label><select id="periodo">
               <option value="">Selecione...</option>
               <option>Diurno</option>
               <option>Noturno</option>
             </select></div>
 
           <div class="time-row">
-            <div class="field"><label>Início</label><input type="time" id="ai-inicio"></div>
-            <div class="field"><label>Término</label><input type="time" id="ai-termino"></div>
+            <div class="field"><label class="ast-obrigatorio">Início</label><input type="time" id="ai-inicio"></div>
+            <div class="field"><label class="ast-obrigatorio">Término</label><input type="time" id="ai-termino"></div>
           </div>
 
         </div>
@@ -145,31 +145,30 @@
       </div>
       <div class="section-body">
         <div class="grid-2">
-          <div class="field"><label>DDS Realizado?</label><select id="dds-realizado">
+          <div class="field"><label class="ast-obrigatorio">DDS Realizado?</label><select id="dds-realizado">
               <option value="">Selecione...</option>
               <option value="N/A">N/A</option>
               <option>Sim</option>
               <option>Não</option>
             </select></div>
-          <div class="field"><label>Possui ARL?</label><select id="arl">
+          <div class="field"><label class="ast-obrigatorio">Possui ARL?</label><select id="arl">
               <option value="">Selecione...</option>
               <option value="N/A">N/A</option>
               <option>Sim</option>
               <option>Não</option>
             </select></div>
-          <div class="field"><label>Teve Inspeção?</label><select id="inspecao">
+          <div class="field"><label class="ast-obrigatorio">Teve Inspeção?</label><select id="inspecao" onchange="validaInspencao()">
               <option value="">Selecione...</option>
-              <option value="N/A">N/A</option>
               <option>Sim</option>
               <option>Não</option>
             </select></div>
-          <div class="field col-span-2"><label>ID</label><input type="text" id="seg-id"></div>
-          <div class="field col-span-2"><label>PA</label><input type="text" id="seg-pa"></div>
-          <div class="field col-span-2"><label>Tema do DDS</label><input type="text" id="dds-tema"
+          <div class="field col-span-2"><label class="ast-obrigatorio">ID</label><input type="text" id="seg-id"></div>
+          <div class="field col-span-2"><label class="ast-obrigatorio">PA</label><input type="text" id="seg-pa"></div>
+          <div class="field col-span-2"><label class="ast-obrigatorio">Tema do DDS</label><input type="text" id="dds-tema"
               placeholder="Assunto abordado no DDS"></div>
-          <div class="field col-span-2"><label>Hospital mais próximo (PAE)</label><input type="text" id="hospital"
+          <div class="field col-span-2"><label class="ast-obrigatorio">Hospital mais próximo (PAE)</label><input type="text" id="hospital"
               placeholder="Pronto Atendimento 24 horas - Jundiapeba"></div>
-          <div class="field col-span-2"><label>Endereço do Hospital</label><input type="text" id="hospital-end"
+          <div class="field col-span-2"><label class="ast-obrigatorio">Endereço do Hospital</label><input type="text" id="hospital-end"
               placeholder="R. DR. Francisco Soares Marialva, 1701"></div>
         </div>
       </div>
@@ -198,37 +197,37 @@
           <div class="field"><label>POCS</label><input type="text" id="pocs"></div>
           <div class="field"><label>PT</label><textarea id="pt" rows="3"
               placeholder="..."></textarea></div>
-          <div class="field"><label>Spool Aço</label><select id="spool">
+          <div class="field"><label class="ast-obrigatorio">Spool Aço</label><select id="spool">
               <option value="">Selecione...</option>
               <option value="N/A">N/A</option>
               <option>Sim</option>
               <option>Não</option>
             </select></div>
-          <div class="field"><label>Solda em Aço</label><select id="solda">
+          <div class="field"><label class="ast-obrigatorio">Solda em Aço</label><select id="solda">
               <option value="">Selecione...</option>
               <option value="N/A">N/A</option>
               <option>Sim</option>
               <option>Não</option>
             </select></div>
-          <div class="field"><label>Teste</label><select id="teste">
+          <div class="field"><label class="ast-obrigatorio">Teste</label><select id="teste">
               <option value="">Selecione...</option>
               <option value="N/A">N/A</option>
               <option>Sim</option>
               <option>Não</option>
             </select></div>
-          <div class="field"><label>Comissionamento</label><select id="comissionamento">
+          <div class="field"><label class="ast-obrigatorio">Comissionamento</label><select id="comissionamento">
               <option value="">Selecione...</option>
               <option value="N/A">N/A</option>
               <option>Sim</option>
               <option>Não</option>
             </select></div>
-          <div class="field"><label>Assentamento</label><select id="assentamento">
+          <div class="field"><label class="ast-obrigatorio">Assentamento</label><select id="assentamento">
               <option value="">Selecione...</option>
               <option value="N/A">N/A</option>
               <option>Sim</option>
               <option>Não</option>
             </select></div>
-          <div class="field"><label>Recomposição</label><select id="recomposicao">
+          <div class="field"><label class="ast-obrigatorio">Recomposição</label><select id="recomposicao">
               <option value="">Selecione...</option>
               <option value="N/A">N/A</option>
               <option>Definitivo</option>
@@ -246,7 +245,7 @@
       </div>
       <div class="section-body">
         <div class="field">
-          <label>Houve Stop Work?</label>
+          <label class="ast-obrigatorio">Houve Stop Work?</label>
           <select id="stop-work-select" onchange="alternarStopWork(this.value)">
             <option value="">Selecione...</option>
             <option value="N/A">N/A</option>
@@ -256,11 +255,11 @@
         </div>
         <div id="stop-work-extra" style="display:none;margin-top:10px">
           <div class="time-row">
-            <div class="field"><label>Início</label><input type="time" id="sw-inicio"></div>
-            <div class="field"><label>Término</label><input type="time" id="sw-termino"></div>
+            <div class="field"><label class="ast-obrigatorio">Início</label><input type="time" id="sw-inicio"></div>
+            <div class="field"><label class="ast-obrigatorio">Término</label><input type="time" id="sw-termino"></div>
           </div>
           <div class="field" style="margin-top:10px">
-            <label>Motivo da Paralização</label>
+            <label class="ast-obrigatorio">Motivo da Paralização</label>
             <textarea id="sw-motivo" rows="3"
               placeholder="Descreva o motivo, providências tomadas, responsáveis..."></textarea>
           </div>
@@ -276,7 +275,7 @@
       </div>
       <div class="section-body">
         <div class="field">
-          <label>Informe os detalhes da atividade</label>
+          <label class="ast-obrigatorio">Informe os detalhes da atividade</label>
           <textarea class="detalhe-atv" id="detalhe-atv" rows="3"
             placeholder="..."></textarea>
         </div>

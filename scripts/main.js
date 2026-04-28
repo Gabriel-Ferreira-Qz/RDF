@@ -1,3 +1,56 @@
+function validarCamposObrigatorios() {
+    const campos = [
+        { id: 'segmento',         nome: 'Segmento' },
+        { id: 'projeto',          nome: 'Projeto' },
+        { id: 'rdo',              nome: 'RDO' },
+        { id: 'responsavel',      nome: 'Responsável Técnico' },
+        { id: 'empresa',          nome: 'Empresa Executora' },
+        { id: 'periodo',          nome: 'Período' },
+        { id: 'ai-inicio',        nome: 'Horário de Início' },
+        { id: 'ai-termino',       nome: 'Horário de Término' },
+        { id: 'dds-realizado',    nome: 'DDS Realizado?' },
+        { id: 'arl',              nome: 'Possui ARL?' },
+        { id: 'inspecao',         nome: 'Teve Inspeção?' },
+        { id: 'seg-id',           nome: 'ID'},
+        { id: 'seg-pa',           nome: 'PA'},
+        { id: 'dds-tema',         nome: 'Tema do DDS'},
+        { id: 'hospital',         nome: 'Hospital mais próximo (PAE)'},
+        { id: 'hospital-end',     nome: 'Endereço do Hospital'},
+        { id: 'spool',            nome: 'Spool Aço'},
+        { id: 'solda',            nome: 'Solda em Aço'},
+        { id: 'teste',            nome: 'Teste'},
+        { id: 'comissionamento',  nome: 'Comissionamento'},
+        { id: 'assentamento',     nome: 'Assentamento'},
+        { id: 'recomposicao',     nome: 'Recomposição'},
+        { id: 'stop-work-select', nome: 'Houve Stop Work?' },
+        { id: 'detalhe-atv',      nome: 'Informe os detalhes da atividade'}
+    ];
+
+    const vazios = [];
+
+    campos.forEach(({ id, nome }) => {
+        const el = g(id);
+        if (!el) return;
+        const vazio = !el.value.trim();
+        if (vazio) {
+            vazios.push(nome);
+            el.classList.add('campo-invalido');
+            el.addEventListener('input',  () => el.classList.remove('campo-invalido'), { once: true });
+            el.addEventListener('change', () => el.classList.remove('campo-invalido'), { once: true });
+        } else {
+            el.classList.remove('campo-invalido');
+        }
+    });
+
+    if (vazios.length > 0) {
+        alert(`⚠️ Preencha os campos obrigatórios antes de exportar:\n\n• ${vazios.join('\n• ')}`);
+        const primeiro = document.querySelector('.campo-invalido');
+        if (primeiro) primeiro.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return false;
+    }
+    return true;
+}
+
 const g = id => document.getElementById(id);
 const val = id => (g(id)?.value?.trim()) || ''
 
@@ -6,32 +59,41 @@ const segmento = document.getElementById('segmento');
 const responsavel = document.getElementById('responsavel');
 
 const opcoesOriginais = [...responsavel.options].map(opt => ({
-  value: opt.value,
-  text: opt.text,
-  className: opt.className
+    value: opt.value,
+    text: opt.text,
+    className: opt.className
 }));
 
 function filtrarResponsavel() {
-  const isSeguranca = segmento.value === '5';
+    const isSeguranca = segmento.value === '5';
 
-  responsavel.innerHTML = '';
+    responsavel.innerHTML = '';
 
-  opcoesOriginais.forEach(opt => {
-    const ehPadrao = opt.value === '';
-    const ehTecGas = opt.className === 'tecGas';
-    const ehTecSeguranca = opt.className === 'tecSeguranca';
+    opcoesOriginais.forEach(opt => {
+        const ehPadrao = opt.value === '';
+        const ehTecGas = opt.className === 'tecGas';
+        const ehTecSeguranca = opt.className === 'tecSeguranca';
 
-    if (
-      ehPadrao ||
-      (isSeguranca && ehTecSeguranca) ||
-      (!isSeguranca && ehTecGas)
-    ) {
-      responsavel.add(new Option(opt.text, opt.value));
+        if (
+            ehPadrao ||
+            (isSeguranca && ehTecSeguranca) ||
+            (!isSeguranca && ehTecGas)
+        ) {
+            responsavel.add(new Option(opt.text, opt.value));
+        }
+    });
+
+    responsavel.value = '';
+
+}
+
+function validaInspencao() {
+    const inspecao = document.getElementById('inspecao').value;
+
+    if (inspecao == 'Não') {
+        document.getElementById('seg-id').value = 'N/A'
+        document.getElementById('seg-pa').value = 'N/A'
     }
-  });
-
-  responsavel.value = '';
-
 }
 
 segmento.addEventListener('change', filtrarResponsavel);
@@ -43,7 +105,9 @@ hoje.setMinutes(hoje.getMinutes() - hoje.getTimezoneOffset());
 dataInput.value = hoje.toISOString().slice(0, 10);
 
 // Stop Work
-function alternarStopWork(v) { g('stop-work-extra').style.display = v === 'Sim' ? 'block' : 'none'; }
+function alternarStopWork(v) { 
+    g('stop-work-extra').style.display = v === 'Sim' ? 'block' : 'none'; 
+}
 
 //Segurança do trabalho
 
@@ -65,9 +129,9 @@ function addGroup(tbodyId, labels) {
     const body = g(tbodyId);
     const rows = labels.map((lbl, i) => {
         const inp = i < labels.length - 1
-            ? `<input type="text" placeholder="${lbl.ph || ''}" id="${lbl.id || ''}" style="width:100%">`
+            ? `<input type="text" placeholder="${lbl.ph || ''}" id="${lbl.id || ''}" style="width:100%" >`
             : `<textarea placeholder="${lbl.ph || ''}" id="${lbl.id}" style="width:100% ; height: 350px"></textarea>`;
-        return makeRow([`<label>${lbl.label}</label>${inp}`], null);
+        return makeRow([`<label class="${lbl.class}">${lbl.label}</label>${inp}`], null);
     });
 
     rows[0].dataset.groupStart = 'true';
@@ -90,8 +154,8 @@ function addAutorizacao() {
 
 function addAtiv() {
     addGroup('atividade-body', [
-        { label: 'Descrição da Atividade', ph: 'Ex.: Concretagem da laje', id: 'descricao' },
-        { label: 'Endereço', ph: 'Ex.: Pav. 3', id: 'endereco' },
+        { label: 'Descrição da Atividade', ph: 'Ex.: Concretagem da laje', id: 'descricao',class: 'ast-obrigatorio' },
+        { label: 'Endereço', ph: 'Ex.: Pav. 3', id: 'endereco', class: 'ast-obrigatorio' },
         { label: 'Observação', ph: '...', id: 'obs-atividade' }
     ]);
 }

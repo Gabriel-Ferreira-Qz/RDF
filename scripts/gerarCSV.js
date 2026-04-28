@@ -1,58 +1,4 @@
-function validarCamposObrigatorios() {
-    const campos = [
-        { id: 'segmento',         nome: 'Segmento' },
-        { id: 'projeto',          nome: 'Projeto' },
-        { id: 'rdo',              nome: 'RDO' },
-        { id: 'responsavel',      nome: 'Responsável Técnico' },
-        { id: 'empresa',          nome: 'Empresa Executora' },
-        { id: 'periodo',          nome: 'Período' },
-        { id: 'ai-inicio',        nome: 'Horário de Início' },
-        { id: 'ai-termino',       nome: 'Horário de Término' },
-        { id: 'dds-realizado',    nome: 'DDS Realizado?' },
-        { id: 'arl',              nome: 'Possui ARL?' },
-        { id: 'inspecao',         nome: 'Teve Inspeção?' },
-        { id: 'seg-id',           nome: 'ID'},
-        { id: 'seg-pa',           nome: 'PA'},
-        { id: 'dds-tema',         nome: 'Tema do DDS'},
-        { id: 'hospital',         nome: 'Hospital mais próximo (PAE)'},
-        { id: 'hospital-end',     nome: 'Endereço do Hospital'},
-        { id: 'pocc',             nome: 'POCC'},
-        { id: 'pocs',             nome: 'POCS'},
-        { id: 'pt',               nome: 'PT'},
-        { id: 'spool',            nome: 'Spool Aço'},
-        { id: 'solda',            nome: 'Solda em Aço'},
-        { id: 'teste',            nome: 'Teste'},
-        { id: 'comissionamento',  nome: 'Comissionamento'},
-        { id: 'assentamento',     nome: 'Assentamento'},
-        { id: 'recomposicao',     nome: 'Recomposição'},
-        { id: 'stop-work-select', nome: 'Houve Stop Work?' },
-        { id: 'detalhe-atv',      nome: 'Informe os detalhes da atividade'}
-    ];
 
-    const vazios = [];
-
-    campos.forEach(({ id, nome }) => {
-        const el = g(id);
-        if (!el) return;
-        const vazio = !el.value.trim();
-        if (vazio) {
-            vazios.push(nome);
-            el.classList.add('campo-invalido');
-            el.addEventListener('input',  () => el.classList.remove('campo-invalido'), { once: true });
-            el.addEventListener('change', () => el.classList.remove('campo-invalido'), { once: true });
-        } else {
-            el.classList.remove('campo-invalido');
-        }
-    });
-
-    if (vazios.length > 0) {
-        alert(`⚠️ Preencha os campos obrigatórios antes de exportar:\n\n• ${vazios.join('\n• ')}`);
-        const primeiro = document.querySelector('.campo-invalido');
-        if (primeiro) primeiro.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        return false;
-    }
-    return true;
-}
 
 function validarAtividades() {
     const rows = document.querySelectorAll('#atividade-body tr[data-group-start="true"]');
@@ -100,7 +46,7 @@ function montarDados() {
         const el = document.getElementById(id);
         if (!el) return '';
         return el.value.trim();
-    };
+    }
 
     const seg = document.getElementById('segmento');
     const res = document.getElementById('responsavel');
