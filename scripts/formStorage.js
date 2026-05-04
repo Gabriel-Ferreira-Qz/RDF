@@ -44,7 +44,6 @@ function salvarCampos() {
     });
 }
 
-// ── Salvar tabelas dinâmicas ───────────────────────────────────────────────
 function salvarTabelas() {
     ['autorizacao-body', 'atividade-body'].forEach(tbodyId => {
         const body = document.getElementById(tbodyId);
@@ -73,7 +72,6 @@ function carregarCampos() {
     }
 }
 
-// ── Carregar tabelas dinâmicas ─────────────────────────────────────────────
 function carregarTabelas() {
     const autorizacao = document.getElementById('autorizacao-body');
     const atividade   = document.getElementById('atividade-body');
@@ -99,7 +97,7 @@ function iniciarAutoSave() {
     });
 }
 
-// ── Escuta digitação dentro das tabelas e salva ────────────────────────────
+
 function iniciarAutoSaveTabelas() {
     ['autorizacao-body', 'atividade-body'].forEach(tbodyId => {
         const body = document.getElementById(tbodyId);
@@ -113,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
     carregarCampos();
     carregarTabelas();
     iniciarAutoSave();
-    iniciarAutoSaveTabelas(); // ← adicionado
+    iniciarAutoSaveTabelas();
 });
 
 function limparForm() {

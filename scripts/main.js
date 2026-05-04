@@ -54,7 +54,6 @@ function validarCamposObrigatorios() {
 const g = id => document.getElementById(id);
 const val = id => (g(id)?.value?.trim()) || ''
 
-// Responsavel
 const segmento = document.getElementById('segmento');
 const responsavel = document.getElementById('responsavel');
 
@@ -97,13 +96,11 @@ function validaInspencao() {
 
 segmento.addEventListener('change', filtrarResponsavel);
 
-// Data
 const dataInput = g('data');
 const hoje = new Date();
 hoje.setMinutes(hoje.getMinutes() - hoje.getTimezoneOffset());
 dataInput.value = hoje.toISOString().slice(0, 10);
 
-// Stop Work
 function alternarStopWork(v) {
     const stopId = g('stop-work-extra')
     if (v == '' || v == 'Não') {
@@ -113,7 +110,6 @@ function alternarStopWork(v) {
     }
 }
 
-// makeRow helper
 function makeRow(cells, onDel) {
     const tr = document.createElement('tr');
     tr.innerHTML = cells.map(c => `<td>${c}</td>`).join('');
@@ -167,7 +163,6 @@ function addAtiv() {
     ]);
 }
 
-// Fotos
 let photos = [];
 const dropArea = g('drop-area'), fileInput = g('file-input'), photoGrid = g('photo-grid');
 dropArea.addEventListener('click', () => fileInput.click());

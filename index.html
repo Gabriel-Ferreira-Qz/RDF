@@ -155,19 +155,20 @@
               <option>Sim</option>
               <option>Não</option>
             </select></div>
-          <div class="field"><label class="ast-obrigatorio">Teve Inspeção?</label><select id="inspecao" onchange="validaInspencao()">
+          <div class="field"><label class="ast-obrigatorio">Teve Inspeção?</label><select id="inspecao"
+              onchange="validaInspencao()">
               <option value="">Selecione...</option>
               <option>Sim</option>
               <option>Não</option>
             </select></div>
           <div class="field col-span-2"><label class="ast-obrigatorio">ID</label><input type="text" id="seg-id"></div>
           <div class="field col-span-2"><label class="ast-obrigatorio">PA</label><input type="text" id="seg-pa"></div>
-          <div class="field col-span-2"><label class="ast-obrigatorio">Tema do DDS</label><input type="text" id="dds-tema"
-              placeholder="Assunto abordado no DDS"></div>
-          <div class="field col-span-2"><label class="ast-obrigatorio">Hospital mais próximo (PAE)</label><input type="text" id="hospital"
-              placeholder="Pronto Atendimento 24 horas - Jundiapeba"></div>
-          <div class="field col-span-2"><label class="ast-obrigatorio">Endereço do Hospital</label><input type="text" id="hospital-end"
-              placeholder="R. DR. Francisco Soares Marialva, 1701"></div>
+          <div class="field col-span-2"><label class="ast-obrigatorio">Tema do DDS</label><input type="text"
+              id="dds-tema" placeholder="Assunto abordado no DDS"></div>
+          <div class="field col-span-2"><label class="ast-obrigatorio">Hospital mais próximo (PAE)</label><input
+              type="text" id="hospital" placeholder="Pronto Atendimento 24 horas - Jundiapeba"></div>
+          <div class="field col-span-2"><label class="ast-obrigatorio">Endereço do Hospital</label><input type="text"
+              id="hospital-end" placeholder="R. DR. Francisco Soares Marialva, 1701"></div>
         </div>
       </div>
     </div>
@@ -193,8 +194,7 @@
         <div class="grid-2" style="margin-top:14px">
           <div class="field"><label>POCC</label><input type="text" id="pocc"></div>
           <div class="field"><label>POCS</label><input type="text" id="pocs"></div>
-          <div class="field"><label>PT</label><textarea id="pt" rows="3"
-              placeholder="..."></textarea></div>
+          <div class="field"><label>PT</label><textarea id="pt" rows="3" placeholder="..."></textarea></div>
           <div class="field"><label class="ast-obrigatorio">Spool Aço</label><select id="spool">
               <option value="">Selecione...</option>
               <option>Sim</option>
@@ -268,8 +268,7 @@
       <div class="section-body">
         <div class="field">
           <label class="ast-obrigatorio">Informe os detalhes da atividade</label>
-          <textarea class="detalhe-atv" id="detalhe-atv" rows="3"
-            placeholder="..."></textarea>
+          <textarea class="detalhe-atv" id="detalhe-atv" rows="3" placeholder="..."></textarea>
         </div>
       </div>
     </div>
@@ -298,7 +297,14 @@
     </div>
 
     <div>
-      <button class="btn-limpar" onclick="limparForm()">Limpar Formulario</button>
+      <button class="btn-limpar" onclick="limparForm()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 20H7L3 16l11-11 6 6-4 4" />
+          <path d="M6.5 17.5l3-3" />
+        </svg>
+        Limpar Formulário
+      </button>
     </div>
 
   </section>
