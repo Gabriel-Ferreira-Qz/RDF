@@ -1,29 +1,29 @@
 function validarCamposObrigatorios() {
     const campos = [
-        { id: 'segmento',         nome: 'Segmento' },
-        { id: 'projeto',          nome: 'Projeto' },
-        { id: 'rdo',              nome: 'RDO' },
-        { id: 'responsavel',      nome: 'Responsável Técnico' },
-        { id: 'empresa',          nome: 'Empresa Executora' },
-        { id: 'periodo',          nome: 'Período' },
-        { id: 'ai-inicio',        nome: 'Horário de Início' },
-        { id: 'ai-termino',       nome: 'Horário de Término' },
-        { id: 'dds-realizado',    nome: 'DDS Realizado?' },
-        { id: 'arl',              nome: 'Possui ARL?' },
-        { id: 'inspecao',         nome: 'Teve Inspeção?' },
-        { id: 'seg-id',           nome: 'ID'},
-        { id: 'seg-pa',           nome: 'PA'},
-        { id: 'dds-tema',         nome: 'Tema do DDS'},
-        { id: 'hospital',         nome: 'Hospital mais próximo (PAE)'},
-        { id: 'hospital-end',     nome: 'Endereço do Hospital'},
-        { id: 'spool',            nome: 'Spool Aço'},
-        { id: 'solda',            nome: 'Solda em Aço'},
-        { id: 'teste',            nome: 'Teste'},
-        { id: 'comissionamento',  nome: 'Comissionamento'},
-        { id: 'assentamento',     nome: 'Assentamento'},
-        { id: 'recomposicao',     nome: 'Recomposição'},
+        { id: 'segmento', nome: 'Segmento' },
+        { id: 'projeto', nome: 'Projeto' },
+        { id: 'rdo', nome: 'RDO' },
+        { id: 'responsavel', nome: 'Responsável Técnico' },
+        { id: 'empresa', nome: 'Empresa Executora' },
+        { id: 'periodo', nome: 'Período' },
+        { id: 'ai-inicio', nome: 'Horário de Início' },
+        { id: 'ai-termino', nome: 'Horário de Término' },
+        { id: 'dds-realizado', nome: 'DDS Realizado?' },
+        { id: 'arl', nome: 'Possui ARL?' },
+        { id: 'inspecao', nome: 'Teve Inspeção?' },
+        { id: 'seg-id', nome: 'ID' },
+        { id: 'seg-pa', nome: 'PA' },
+        { id: 'dds-tema', nome: 'Tema do DDS' },
+        { id: 'hospital', nome: 'Hospital mais próximo (PAE)' },
+        { id: 'hospital-end', nome: 'Endereço do Hospital' },
+        { id: 'spool', nome: 'Spool Aço' },
+        { id: 'solda', nome: 'Solda em Aço' },
+        { id: 'teste', nome: 'Teste' },
+        { id: 'comissionamento', nome: 'Comissionamento' },
+        { id: 'assentamento', nome: 'Assentamento' },
+        { id: 'recomposicao', nome: 'Recomposição' },
         { id: 'stop-work-select', nome: 'Houve Stop Work?' },
-        { id: 'detalhe-atv',      nome: 'Informe os detalhes da atividade'}
+        { id: 'detalhe-atv', nome: 'Informe os detalhes da atividade' }
     ];
 
     const vazios = [];
@@ -35,7 +35,7 @@ function validarCamposObrigatorios() {
         if (vazio) {
             vazios.push(nome);
             el.classList.add('campo-invalido');
-            el.addEventListener('input',  () => el.classList.remove('campo-invalido'), { once: true });
+            el.addEventListener('input', () => el.classList.remove('campo-invalido'), { once: true });
             el.addEventListener('change', () => el.classList.remove('campo-invalido'), { once: true });
         } else {
             el.classList.remove('campo-invalido');
@@ -105,11 +105,9 @@ hoje.setMinutes(hoje.getMinutes() - hoje.getTimezoneOffset());
 dataInput.value = hoje.toISOString().slice(0, 10);
 
 // Stop Work
-function alternarStopWork(v) { 
-    g('stop-work-extra').style.display = v === 'Sim' ? 'block' : 'none'; 
+function alternarStopWork(v) {
+    g('stop-work-extra').style.display = v === 'Sim' ? 'block' : 'none';
 }
-
-//Segurança do trabalho
 
 // makeRow helper
 function makeRow(cells, onDel) {
@@ -154,7 +152,7 @@ function addAutorizacao() {
 
 function addAtiv() {
     addGroup('atividade-body', [
-        { label: 'Descrição da Atividade', ph: 'Ex.: Concretagem da laje', id: 'descricao',class: 'ast-obrigatorio' },
+        { label: 'Descrição da Atividade', ph: 'Ex.: Concretagem da laje', id: 'descricao', class: 'ast-obrigatorio' },
         { label: 'Endereço', ph: 'Ex.: Pav. 3', id: 'endereco', class: 'ast-obrigatorio' },
         { label: 'Observação', ph: '...', id: 'obs-atividade' }
     ]);

@@ -1,5 +1,3 @@
-
-
 function validarAtividades() {
     const rows = document.querySelectorAll('#atividade-body tr[data-group-start="true"]');
 
