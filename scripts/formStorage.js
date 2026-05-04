@@ -44,6 +44,21 @@ function salvarCampos() {
     });
 }
 
+// ── Salvar tabelas dinâmicas ───────────────────────────────────────────────
+function salvarTabelas() {
+    ['autorizacao-body', 'atividade-body'].forEach(tbodyId => {
+        const body = document.getElementById(tbodyId);
+        if (!body) return;
+
+        // ← força o valor digitado de volta no atributo HTML antes de salvar
+        body.querySelectorAll('input, textarea').forEach(el => {
+            el.setAttribute('value', el.value);
+        });
+
+        const chave = tbodyId === 'autorizacao-body' ? 'rdf_autorizacoes' : 'rdf_atividades';
+        localStorage.setItem(chave, body.innerHTML);
+    });
+}
 
 function carregarCampos() {
     idCampo.forEach(({ nome }) => {
@@ -52,18 +67,27 @@ function carregarCampos() {
         if (el && valor !== null) el.value = valor;
     });
 
-
     const sw = document.getElementById('stop-work-select');
     if (sw && sw.value === 'Sim') {
         document.getElementById('stop-work-extra').style.display = 'block';
     }
 }
 
+// ── Carregar tabelas dinâmicas ─────────────────────────────────────────────
+function carregarTabelas() {
+    const autorizacao = document.getElementById('autorizacao-body');
+    const atividade   = document.getElementById('atividade-body');
+
+    const rawAut = localStorage.getItem('rdf_autorizacoes');
+    const rawAtv = localStorage.getItem('rdf_atividades');
+
+    if (autorizacao && rawAut) autorizacao.innerHTML = rawAut;
+    if (atividade   && rawAtv) atividade.innerHTML   = rawAtv;
+}
 
 function limparCampos() {
     idCampo.forEach(({ nome }) => localStorage.removeItem(nome));
 }
-
 
 function iniciarAutoSave() {
     idCampo.forEach(({ nome }) => {
@@ -75,9 +99,37 @@ function iniciarAutoSave() {
     });
 }
 
+// ── Escuta digitação dentro das tabelas e salva ────────────────────────────
+function iniciarAutoSaveTabelas() {
+    ['autorizacao-body', 'atividade-body'].forEach(tbodyId => {
+        const body = document.getElementById(tbodyId);
+        if (!body) return;
+        body.addEventListener('input', () => salvarTabelas());
+        body.addEventListener('change', () => salvarTabelas());
+    });
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     carregarCampos();
+    carregarTabelas();
     iniciarAutoSave();
+    iniciarAutoSaveTabelas(); // ← adicionado
 });
 
+function limparForm() {
+    idCampo
+        .filter(({ nome }) => nome !== 'data')
+        .forEach(({ nome }) => {
+            const el = document.getElementById(nome);
+            if (el) el.value = '';
+            localStorage.removeItem(nome);
+        });
+
+    const autorizacao = document.getElementById('autorizacao-body');
+    const atividade   = document.getElementById('atividade-body');
+    if (autorizacao) autorizacao.innerHTML = '';
+    if (atividade)   atividade.innerHTML   = '';
+
+    localStorage.removeItem('rdf_autorizacoes');
+    localStorage.removeItem('rdf_atividades');
+}

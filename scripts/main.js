@@ -84,7 +84,6 @@ function filtrarResponsavel() {
     });
 
     responsavel.value = '';
-
 }
 
 function validaInspencao() {
@@ -106,7 +105,12 @@ dataInput.value = hoje.toISOString().slice(0, 10);
 
 // Stop Work
 function alternarStopWork(v) {
-    g('stop-work-extra').style.display = v === 'Sim' ? 'block' : 'none';
+    const stopId = g('stop-work-extra')
+    if (v == '' || v == 'Não') {
+        stopId.style.display = 'none'
+    } else {
+        stopId.style.display = 'block'
+    }
 }
 
 // makeRow helper
@@ -137,10 +141,15 @@ function addGroup(tbodyId, labels) {
 
     const btn = document.createElement('button');
     btn.className = 'row-del'; btn.innerHTML = '×'; btn.title = 'Remover';
-    btn.onclick = () => rows.forEach(r => r.remove());
+    btn.onclick = () => {
+        rows.forEach(r => r.remove());
+        salvarTabelas(); // ← salva ao remover
+    };
     const td = document.createElement('td'); td.style.cssText = 'display:flex;align-items:flex-start;padding:4px;';
     td.appendChild(btn); rows[0].appendChild(td);
     rows.forEach(r => body.appendChild(r));
+
+    salvarTabelas(); // ← salva ao adicionar (movido para cá, vale para addAutorizacao e addAtiv)
 }
 
 function addAutorizacao() {
