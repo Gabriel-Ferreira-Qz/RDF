@@ -414,11 +414,16 @@ textarea {
     font-size: 15px;
 }
 
+.limpar-campo {
+    margin: 0 auto;
+    width: fit-content;
+}
+
 .btn-limpar {
     background: var(--c-yellow);
     color: #1A1917;
     border: none;
-    padding: 8px 20px;
+    padding: 15px 30px;
     border-radius: 4px;
     font-family: var(--font);
     font-size: 13px;
