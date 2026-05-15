@@ -86,11 +86,14 @@ function filtrarResponsavel() {
 }
 
 function validaInspencao() {
-    const inspecao = document.getElementById('inspecao').value;
+    const inspecao = g('inspecao').value;
 
     if (inspecao == 'Não') {
         document.getElementById('seg-id').value = 'N/A'
         document.getElementById('seg-pa').value = 'N/A'
+    } else {
+        document.getElementById('seg-id').value = ''
+        document.getElementById('seg-pa').value = ''
     }
 }
 
@@ -145,7 +148,7 @@ function addGroup(tbodyId, labels) {
     td.appendChild(btn); rows[0].appendChild(td);
     rows.forEach(r => body.appendChild(r));
 
-    salvarTabelas(); // ← salva ao adicionar (movido para cá, vale para addAutorizacao e addAtiv)
+    salvarTabelas();
 }
 
 function addAutorizacao() {
@@ -188,5 +191,14 @@ function renderPhotoCard(obj) {
     card.innerHTML = `<img src="${obj.src}" alt="foto"><div class="photo-caption"><input type="text" placeholder="Legenda..." value="${obj.caption}" oninput="updateCaption('${obj.id}',this.value)"></div><button class="photo-del" onclick="removePhoto('${obj.id}')">×</button>`;
     photoGrid.appendChild(card);
 }
-function updateCaption(id, v) { const p = photos.find(p => p.id === id); if (p) p.caption = v; }
-function removePhoto(id) { photos = photos.filter(p => p.id !== id); const el = photoGrid.querySelector(`[data-id="${id}"]`); if (el) el.remove(); }
+
+function updateCaption(id, v) {
+    const p = photos.find(p => p.id === id);
+    if (p) p.caption = v;
+}
+
+function removePhoto(id) {
+    photos = photos.filter(p => p.id !== id);
+    const el = photoGrid.querySelector(`[data-id="${id}"]`);
+    if (el) el.remove();
+}

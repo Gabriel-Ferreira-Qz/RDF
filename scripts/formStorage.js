@@ -130,4 +130,6 @@ function limparForm() {
 
     localStorage.removeItem('rdf_autorizacoes');
     localStorage.removeItem('rdf_atividades');
+
+    alert(`⚠️ O Formulário foi limpo`);
 }
