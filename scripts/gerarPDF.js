@@ -1,6 +1,6 @@
 async function gerarPDF() {
-    if (!validarCamposObrigatorios()) return;
-    if (!validarAtividades()) return;
+    //if (!validarCamposObrigatorios()) return;
+    //if (!validarAtividades()) return;
 
     const btn = g('btn-exportar-pdf');
     btn.disabled = true; btn.textContent = 'Gerando...';
@@ -108,9 +108,11 @@ async function gerarPDF() {
         // ── Seção 1
         secHeader(1, 'Identificação da Atividade');
         fld('Segmento', campoNa(idVal('segmento')));
+        idVal('segmento') == 'Segurança do Trabalho' ? fld('Segmento a Ser Visitado', campoNa(val('segmento-visitado'))) : '';
         fld('Projeto', campoNa(val('projeto')));
         fld2('RDO', campoNa(val('rdo')), 'Responsável Técnico', campoNa(idVal('responsavel')));
-        fld2('Empresa Executora', campoNa(val('empresa')), 'Data do Relatório', campoNa(val('data')));
+        fld2('Empresa Contratada', campoNa(val('empresa')), 'Data do Relatório', campoNa(val('data')));
+        idVal('segmento') == 'Segurança do Trabalho' ? fld2('Engenheiro Comgás Responsável', campoNa(val('engenheiro-resposavel')), 'Quantas Frentes Havia Desse Engenheiro?', campoNa(val('qtd-frentes-eng'))) : ''
         fld('Período', campoNa(val('periodo')));
         fld2('Início', campoNa(val('ai-inicio')), 'Término', campoNa(val('ai-termino')));
         y += 4;
@@ -138,6 +140,7 @@ async function gerarPDF() {
         fld2('DDS Realizado?', campoNa(val('dds-realizado')), 'Possui ARL?', campoNa(val('arl')));
         fld2('Teve Inspeção?', campoNa(val('inspecao')), 'ID', campoNa(val('seg-id')));
         fld2('PA', campoNa(val('seg-pa')), 'Tema do DDS', campoNa(val('dds-tema')));
+        fld('Qual a Região?', campoNa(idVal('regiao')))
         fld('Hospital mais próximo (PAE)', campoNa(val('hospital')));
         fld('Endereço do Hospital', campoNa(val('hospital-end')));
         y += 4;
@@ -226,7 +229,7 @@ async function gerarPDF() {
         }
 
         const nomeArquivoPDF = `RDF_${val('data') || 'sem-data'}_${idVal('segmento') || 'sem-segmeto'}_${idVal('responsavel') || 'sem-responsavel'}`
-        doc.save(`${nomeArquivoPDF}.pdf`);
+        //doc.save(`${nomeArquivoPDF}.pdf`);
     } catch (err) {
         console.error(err); alert('Erro ao gerar PDF: ' + err.message);
     }

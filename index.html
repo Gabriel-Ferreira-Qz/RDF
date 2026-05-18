@@ -52,7 +52,7 @@
 
           <div class="field col-span-2">
             <label class="ast-obrigatorio">Segmento</label>
-            <select id="segmento">
+            <select id="segmento" onchange="trocaDeSegmento(this.value)">
               <option value="">Selecione...</option>
               <option value="1">Manutenção e Operações de Rede</option>
               <option value="2">Assistência Técnica</option>
@@ -62,15 +62,28 @@
             </select>
           </div>
 
+          <div id="segVisitado" class="field col-span-2">
+            <label class="ast-obrigatorio">Segmento a Ser Visitado</label>
+            <select id="segmento-visitado">
+              <option value="">Selecione...</option>
+              <option>N/A</option>
+              <option>Manutenção e Operações de Rede</option>
+              <option>Assistência Técnica</option>
+              <option>Automação e Catódica</option>
+              <option>Manutenção Civil</option>
+            </select>
+          </div>
+
           <div class="field col-span-2">
             <label class="ast-obrigatorio">Projeto</label>
             <input type="text" id="projeto" placeholder="Ex: Troca de Bateria ISA">
           </div>
 
-          <div class="field">
+          <div class="field" id="div-rdo">
             <label class="ast-obrigatorio">RDO</label>
             <select id="rdo">
               <option value="">Selecione...</option>
+              <option>N/A</option>
               <option>Sim</option>
               <option>Não</option>
             </select>
@@ -100,14 +113,34 @@
             </select>
           </div>
 
-          <div class="field"><label class="ast-obrigatorio">Empresa Executora</label><input type="text" id="empresa"
-              placeholder="Nome da empresa"></div>
-          <div class="field"><label class="ast-obrigatorio">Data do Relatório</label><input type="date" id="data"></div>
-          <div class="field"><label class="ast-obrigatorio">Período</label><select id="periodo">
+          <div class="field">
+            <label class="ast-obrigatorio">Empresa Contratada</label>
+            <input type="text" id="empresa" placeholder="Nome da empresa">
+          </div>
+
+          <div id="engComgas" class="field">
+            <label class="ast-obrigatorio">Engenheiro Comgás Responsável</label>
+            <input type="text" id="engenheiro-resposavel" placeholder="Nome do Engenheiro">
+          </div>
+
+          <div id="engFrentes" class="field">
+            <label class="ast-obrigatorio">Quantas Frentes Havia Desse Engenheiro?</label>
+            <input type="number" id="qtd-frentes-eng" placeholder="N° de Frentes">
+          </div>
+
+          <div class="field">
+            <label class="ast-obrigatorio">Data do Relatório</label>
+            <input type="date" id="data">
+          </div>
+
+          <div class="field">
+            <label class="ast-obrigatorio">Período</label>
+            <select id="periodo">
               <option value="">Selecione...</option>
               <option>Diurno</option>
               <option>Noturno</option>
-            </select></div>
+            </select>
+          </div>
 
           <div class="time-row">
             <div class="field"><label class="ast-obrigatorio">Início</label><input type="time" id="ai-inicio"></div>
@@ -145,30 +178,62 @@
       </div>
       <div class="section-body">
         <div class="grid-2">
-          <div class="field"><label class="ast-obrigatorio">DDS Realizado?</label><select id="dds-realizado">
+          <div class="field">
+            <label class="ast-obrigatorio">DDS Realizado?</label>
+            <select id="dds-realizado">
               <option value="">Selecione...</option>
               <option>Sim</option>
               <option>Não</option>
-            </select></div>
-          <div class="field"><label class="ast-obrigatorio">Possui ARL?</label><select id="arl">
+            </select>
+          </div>
+          <div class="field">
+            <label class="ast-obrigatorio">Possui ARL?</label>
+            <select id="arl">
               <option value="">Selecione...</option>
               <option>Sim</option>
               <option>Não</option>
-            </select></div>
-          <div class="field"><label class="ast-obrigatorio">Teve Inspeção?</label><select id="inspecao"
-              onchange="validaInspencao()">
+            </select>
+          </div>
+          <div class="field">
+            <label class="ast-obrigatorio">Teve Inspeção?</label>
+            <select id="inspecao" onchange="validaInspencao()">
               <option value="">Selecione...</option>
               <option>Sim</option>
               <option>Não</option>
-            </select></div>
-          <div class="field col-span-2"><label class="ast-obrigatorio">ID</label><input type="text" id="seg-id"></div>
-          <div class="field col-span-2"><label class="ast-obrigatorio">PA</label><input type="text" id="seg-pa"></div>
-          <div class="field col-span-2"><label class="ast-obrigatorio">Tema do DDS</label><input type="text"
-              id="dds-tema" placeholder="Assunto abordado no DDS"></div>
-          <div class="field col-span-2"><label class="ast-obrigatorio">Hospital mais próximo (PAE)</label><input
-              type="text" id="hospital" placeholder="Pronto Atendimento 24 horas - Jundiapeba"></div>
-          <div class="field col-span-2"><label class="ast-obrigatorio">Endereço do Hospital</label><input type="text"
-              id="hospital-end" placeholder="R. DR. Francisco Soares Marialva, 1701"></div>
+            </select>
+          </div>
+          <div class="field col-span-2">
+            <label class="ast-obrigatorio">ID</label>
+            <input type="text" id="seg-id">
+          </div>
+          <div class="field col-span-2">
+            <label class="ast-obrigatorio">PA</label>
+            <input type="text" id="seg-pa">
+          </div>
+          <div class="field col-span-2">
+            <label class="ast-obrigatorio">Tema do DDS</label>
+            <input type="text" id="dds-tema" placeholder="Assunto abordado no DDS">
+          </div>
+
+          <div>
+            <label class="ast-obrigatorio">Qual a Região?</label>
+            <select id="regiao">
+              <option value="">Selecione...</option>
+              <option>RMSP</option>
+              <option>Vale</option>
+              <option>Interior</option>
+              <option>Baixada</option>
+            </select>
+          </div>
+
+          <div class="field col-span-2">
+            <label class="ast-obrigatorio">Hospital mais próximo (PAE)</label>
+            <input type="text" id="hospital" placeholder="Pronto Atendimento 24 horas - Jundiapeba">
+          </div>
+          <div class="field col-span-2">
+            <label class="ast-obrigatorio">Endereço do Hospital</label>
+            <input type="text" id="hospital-end" placeholder="R. DR. Francisco Soares Marialva, 1701">
+          </div>
         </div>
       </div>
     </div>
@@ -192,14 +257,25 @@
           </button>
         </div>
         <div class="grid-2" style="margin-top:14px">
-          <div class="field"><label>POCC</label><input type="text" id="pocc"></div>
-          <div class="field"><label>POCS</label><input type="text" id="pocs"></div>
-          <div class="field"><label>PT</label><textarea id="pt" rows="3" placeholder="..."></textarea></div>
-          <div class="field"><label class="ast-obrigatorio">Spool Aço</label><select id="spool">
+          <div class="field">
+            <label>POCC</label>
+            <input type="text" id="pocc">
+          </div>
+          <div class="field">
+            <label>POCS</label>
+            <input type="text" id="pocs">
+          </div>
+          <div class="field">
+            <label>PT</label>
+            <textarea id="pt" rows="3" placeholder="..."></textarea>
+          </div>
+          <div class="field">
+            <label class="ast-obrigatorio">Spool Aço</label><select id="spool">
               <option value="">Selecione...</option>
               <option>Sim</option>
               <option>Não</option>
-            </select></div>
+            </select>
+          </div>
           <div class="field"><label class="ast-obrigatorio">Solda em Aço</label><select id="solda">
               <option value="">Selecione...</option>
               <option>Sim</option>

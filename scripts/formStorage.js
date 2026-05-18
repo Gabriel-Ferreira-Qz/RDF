@@ -1,9 +1,16 @@
 const idCampo = [
     { secao: 'campo1', nome: 'segmento' },
+
+    { secao: 'campo1', nome: 'segmento-visitado' },
+
     { secao: 'campo1', nome: 'projeto' },
     { secao: 'campo1', nome: 'rdo' },
     { secao: 'campo1', nome: 'responsavel' },
     { secao: 'campo1', nome: 'empresa' },
+    { secao: 'campo1', nome: 'engenheiro-resposavel' },
+    { secao: 'campo1', nome: 'qtd-frentes-eng' },
+
+    
     { secao: 'campo1', nome: 'data' },
     { secao: 'campo1', nome: 'periodo' },
     { secao: 'campo1', nome: 'ai-inicio' },
@@ -15,6 +22,7 @@ const idCampo = [
     { secao: 'campo3', nome: 'seg-id' },
     { secao: 'campo3', nome: 'seg-pa' },
     { secao: 'campo3', nome: 'dds-tema' },
+    { secao: 'campo3', nome: 'regiao' },
     { secao: 'campo3', nome: 'hospital' },
     { secao: 'campo3', nome: 'hospital-end' },
 
@@ -49,7 +57,6 @@ function salvarTabelas() {
         const body = document.getElementById(tbodyId);
         if (!body) return;
 
-        // ← força o valor digitado de volta no atributo HTML antes de salvar
         body.querySelectorAll('input, textarea').forEach(el => {
             el.setAttribute('value', el.value);
         });

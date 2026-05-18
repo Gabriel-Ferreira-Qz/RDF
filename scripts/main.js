@@ -14,6 +14,7 @@ function validarCamposObrigatorios() {
         { id: 'seg-id', nome: 'ID' },
         { id: 'seg-pa', nome: 'PA' },
         { id: 'dds-tema', nome: 'Tema do DDS' },
+        { id: 'regiao', nome: 'Qual a Região?' },
         { id: 'hospital', nome: 'Hospital mais próximo (PAE)' },
         { id: 'hospital-end', nome: 'Endereço do Hospital' },
         { id: 'spool', nome: 'Spool Aço' },
@@ -51,10 +52,49 @@ function validarCamposObrigatorios() {
     return true;
 }
 
+function validarAtividades() {
+    const rows = document.querySelectorAll('#atividade-body tr[data-group-start="true"]');
+
+    if (rows.length === 0) {
+        alert('⚠️ Adicione pelo menos uma atividade antes de exportar.');
+        return false;
+    }
+
+    let valido = true;
+
+    rows.forEach((row, i) => {
+        const input1 = row.querySelector('input');
+        const input2 = row.nextElementSibling?.querySelector('input');
+
+        [input1, input2].forEach(el => {
+            if (!el) return;
+            if (!el.value.trim()) {
+                el.classList.add('campo-invalido');
+                el.addEventListener('input', () => el.classList.remove('campo-invalido'), { once: true });
+                valido = false;
+            }
+        });
+    });
+
+    if (!valido) {
+        alert('⚠️ Preencha os campos obrigatórios em todas as atividades.');
+        document.querySelector('#atividade-body .campo-invalido')
+            ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    return valido;
+}
+
 const g = id => document.getElementById(id);
 const val = id => (g(id)?.value?.trim()) || ''
 
-const segmento = document.getElementById('segmento');
+function idVal(id) {
+    const el = document.getElementById(id);
+    const textoId = el.options[el.selectedIndex].text;
+    return textoId === 'Selecione...' ? '' : textoId;
+}
+
+
 const responsavel = document.getElementById('responsavel');
 
 const opcoesOriginais = [...responsavel.options].map(opt => ({
@@ -63,8 +103,45 @@ const opcoesOriginais = [...responsavel.options].map(opt => ({
     className: opt.className
 }));
 
-function filtrarResponsavel() {
-    const isSeguranca = segmento.value === '5';
+const idTST = [
+    {
+        divID: 'segVisitado',
+        inputID: 'segmento-visitado',
+        label: 'Segmento a Ser Visitado'
+    },
+    {
+        divID: 'engComgas',
+        inputID: 'engenheiro-resposavel',
+        label: 'Segmento a Ser Visitado'
+
+    },
+    {
+        divID: 'engFrentes',
+        inputID: 'qtd-frentes-eng',
+        label: 'Segmento a Ser Visitado'
+
+    }
+]
+
+function limpaCamposTST(divID, inputID) {
+    g(divID).style.display = 'none';
+    g(inputID).value = ''
+    g('div-rdo').style.display = 'block';
+    g('rdo').selectedIndex = 0;
+    g('engenheiro-resposavel').value = 'N/A'
+    g('qtd-frentes-eng').value = '0'
+}
+
+function addCampoTST(divID) {
+    g(divID).style.display = 'block';
+    g('div-rdo').style.display = 'none';
+    g('rdo').selectedIndex = 1;
+    g('engenheiro-resposavel').value = ''
+    g('qtd-frentes-eng').value = ''
+}
+
+function trocaDeSegmento(e) {
+    const isSeguranca = e === '5';
 
     responsavel.innerHTML = '';
 
@@ -81,9 +158,15 @@ function filtrarResponsavel() {
             responsavel.add(new Option(opt.text, opt.value));
         }
     });
-
     responsavel.value = '';
+
+    idTST.forEach(({ divID, inputID }) => {
+        if (isSeguranca) {
+            return addCampoTST(divID);
+        } return limpaCamposTST(divID, inputID);
+    })
 }
+
 
 function validaInspencao() {
     const inspecao = g('inspecao').value;
@@ -96,8 +179,6 @@ function validaInspencao() {
         document.getElementById('seg-pa').value = ''
     }
 }
-
-segmento.addEventListener('change', filtrarResponsavel);
 
 const dataInput = g('data');
 const hoje = new Date();

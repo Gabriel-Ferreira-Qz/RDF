@@ -1,37 +1,3 @@
-function validarAtividades() {
-    const rows = document.querySelectorAll('#atividade-body tr[data-group-start="true"]');
-
-    if (rows.length === 0) {
-        alert('⚠️ Adicione pelo menos uma atividade antes de exportar.');
-        return false;
-    }
-
-    let valido = true;
-
-    rows.forEach((row, i) => {
-        const input1 = row.querySelector('input');
-        const input2 = row.nextElementSibling?.querySelector('input');
-
-        [input1, input2].forEach(el => {
-            if (!el) return;
-            if (!el.value.trim()) {
-                el.classList.add('campo-invalido');
-                el.addEventListener('input', () => el.classList.remove('campo-invalido'), { once: true });
-                valido = false;
-            }
-        });
-    });
-
-    if (!valido) {
-        alert('⚠️ Preencha os campos obrigatórios em todas as atividades.');
-        document.querySelector('#atividade-body .campo-invalido')
-            ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-
-    return valido;
-}
-
-
 document.getElementById('btn-exportar').addEventListener('click', function () {
     if (!validarCamposObrigatorios()) return;
     if (!validarAtividades()) return;
@@ -57,12 +23,6 @@ function montarDados() {
         return String(v ?? '').trim() || 'N/A';
     } 
 
-    function idVal(id) {
-        const el = document.getElementById(id);
-        const textoId = el.options[el.selectedIndex].text;
-        return textoId === 'Selecione...' ? '' : textoId;
-    }
-
     const atividades = [];
     const atividadeBody = document.querySelectorAll('#atividade-body tr');
 
@@ -84,10 +44,13 @@ function montarDados() {
     const cabecalho = [
         'ID RDF',
         'SEGMENTO',
+        'SEGMENTO A SER VISITADO',
         'PROJETO',
         'RDO',
         'RESPONSÁVEL TÉCNICO',
-        'EMPRESA EXECUTORA',
+        'EMPRESA CONTRATADA',
+        'ENGENHEIRO COMGÁS RESPONSÁVEL',
+        'QUANTAS FRENTES HAVIA DESSE ENGENHEIRO',
         'DATA DO RELATÓRIO',
         'PERÍODO DA ATIVIDADE',
         'INÍCIO DA ATIVIDADE',
@@ -98,6 +61,7 @@ function montarDados() {
         'ID',
         'PA',
         'TEMA DO DDS',
+        'QUAL A REGIÃO',
         'HOSPITAL MAIS PRÓXIMO (PAE)',
         'ENDEREÇO DO HOSPITAL',
         'ID ATIVIDADE',
@@ -124,10 +88,13 @@ function montarDados() {
         ...atividades.map(({ descricao, endereco, observacao, idAtividade }) => [
             idRDF,
             campoNa(idVal('segmento')),
+            campoNa(idVal('segmento-visitado')),
             campoNa(val('projeto')),
             campoNa(val('rdo')),
             campoNa(idVal('responsavel')),
             campoNa(val('empresa')),
+            campoNa(val('engenheiro-resposavel')),
+            campoNa(val('qtd-frentes-eng')),
             campoNa(val('data')),
             campoNa(val('periodo')),
             campoNa(val('ai-inicio')),
@@ -138,6 +105,7 @@ function montarDados() {
             campoNa(val('seg-id')),
             campoNa(val('seg-pa')),
             campoNa(val('dds-tema')),
+            campoNa(idVal('regiao')),
             campoNa(val('hospital')),
             campoNa(val('hospital-end')),
             idAtividade,
