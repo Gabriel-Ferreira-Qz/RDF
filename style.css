@@ -435,3 +435,9 @@ textarea {
     gap: 7px;
     transition: background .15s
 }
+
+#segVisitado,
+#engComgas,
+#engFrentes {
+    display: none;
+}

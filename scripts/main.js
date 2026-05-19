@@ -223,7 +223,7 @@ function addGroup(tbodyId, labels) {
     btn.className = 'row-del'; btn.innerHTML = '×'; btn.title = 'Remover';
     btn.onclick = () => {
         rows.forEach(r => r.remove());
-        salvarTabelas(); // ← salva ao remover
+        salvarTabelas();
     };
     const td = document.createElement('td'); td.style.cssText = 'display:flex;align-items:flex-start;padding:4px;';
     td.appendChild(btn); rows[0].appendChild(td);
