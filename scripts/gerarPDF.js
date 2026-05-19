@@ -1,6 +1,6 @@
 async function gerarPDF() {
-    //if (!validarCamposObrigatorios()) return;
-    //if (!validarAtividades()) return;
+    if (!validarCamposObrigatorios()) return;
+    if (!validarAtividades()) return;
 
     const btn = g('btn-exportar-pdf');
     btn.disabled = true; btn.textContent = 'Gerando...';
@@ -229,7 +229,7 @@ async function gerarPDF() {
         }
 
         const nomeArquivoPDF = `RDF_${val('data') || 'sem-data'}_${idVal('segmento') || 'sem-segmeto'}_${idVal('responsavel') || 'sem-responsavel'}`
-        //doc.save(`${nomeArquivoPDF}.pdf`);
+        doc.save(`${nomeArquivoPDF}.pdf`);
     } catch (err) {
         console.error(err); alert('Erro ao gerar PDF: ' + err.message);
     }
